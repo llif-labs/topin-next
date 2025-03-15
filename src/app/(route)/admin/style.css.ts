@@ -17,5 +17,5 @@ export const adminChildren = style({
   flex: 1,
   overflowY: 'scroll',
   padding: '1rem',
-  maxHeight: 'calc(100vh - (5.1rem + 3.3rem))'
+  maxHeight: 'calc(100vh - 10rem)'
 })

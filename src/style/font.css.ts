@@ -8,31 +8,31 @@ globalFontFace(pretendard, [
     fontWeight: 900
   },
   {
-    src: 'url("/font/Pretendard-Bold.woff")',
+    src: 'url("/font/Pretendard-ExtraBold.woff")',
     fontWeight: 800
   },
   {
-    src: 'url("/font/Pretendard-ExtraBold.woff")',
+    src: 'url("/font/Pretendard-Bold.woff")',
     fontWeight: 700
   },
   {
-    src: 'url("/font/Pretendard-ExtraLight.woff")',
+    src: 'url("/font/Pretendard-SemiBold.woff")',
     fontWeight: 600
   },
   {
-    src: 'url("/font/Pretendard-Light.woff")',
+    src: 'url("/font/Pretendard-Medium.woff")',
     fontWeight: 500
   },
   {
-    src: 'url("/font/Pretendard-Medium.woff")',
+    src: 'url("/font/Pretendard-Regular.woff")',
     fontWeight: 400
   },
   {
-    src: 'url("/font/Pretendard-Regular.woff")',
+    src: 'url("/font/Pretendard-Light.woff")',
     fontWeight: 300
   },
   {
-    src: 'url("/font/Pretendard-SemiBold.woff")',
+    src: 'url("/font/Pretendard-ExtraLight.woff")',
     fontWeight: 200
   },
   {

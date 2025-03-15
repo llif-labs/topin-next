@@ -8,7 +8,10 @@ globalStyle('html, body', {
 });
 
 globalStyle('*', {
-  color: '#111827'
+  color: '#111827',
+  padding: 0,
+  margin: 0,
+  listStyle: 'none',
 })
 
 globalStyle('button', {
@@ -61,5 +64,15 @@ globalStyle('p.title', {
 
 globalStyle('p.sub', {
   font: '500 1.6rem "Pretendard", sans-serif',
+  letterSpacing: '-0.02em'
+})
+
+globalStyle('li.menu', {
+  font: '500 1.8rem "Pretendard", sans-serif',
+  letterSpacing: '-0.02em'
+})
+
+globalStyle('li.sub', {
+  font: '500 1.4rem "Pretendard", sans-serif',
   letterSpacing: '-0.02em'
 })
