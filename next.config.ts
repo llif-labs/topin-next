@@ -5,6 +5,13 @@ const withVanillaExtract = createVanillaExtractPlugin()
 
 const nextConfig: NextConfig = {
   /* config options here */
+  redirects: () => [
+    {
+      source: '/admin',
+      destination: '/admin/dashboard',
+      permanent: true
+    },
+  ]
 };
 
 export default withVanillaExtract(nextConfig);
