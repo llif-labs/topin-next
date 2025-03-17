@@ -20,6 +20,7 @@ export const breadcrumbs = {
   nav: style({
     display: 'flex',
     gap: '.8rem',
+    opacity: '.5'
   }),
   span: style({
     fontSize: '1.1rem',
