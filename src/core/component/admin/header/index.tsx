@@ -47,9 +47,9 @@ const AdminHeader = () => {
             {index > 0 && <span className={breadcrumbs.span}> &gt; </span>}
             <span className={breadcrumbs.span} key={`${item.path}-${index}`}>
               {index === breadcrumbItems.length - 1 ? (
-                <Link href={item.path}>{item.label}</Link>
-              ) : (
                 item.label
+              ) : (
+                <Link className={breadcrumbs.a} href={item.path}>{item.label}</Link>
               )}
             </span>
           </React.Fragment>

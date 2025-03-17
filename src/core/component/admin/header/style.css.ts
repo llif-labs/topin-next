@@ -20,10 +20,15 @@ export const breadcrumbs = {
   nav: style({
     display: 'flex',
     gap: '.8rem',
-    opacity: '.5'
+    opacity: .7
   }),
   span: style({
     fontSize: '1.1rem',
     color: adminColor.grayFontColor,
+  }),
+  a: style({
+    fontSize: '1.1rem',
+    color: adminColor.grayFontColor,
+    opacity: .7
   }),
 }
