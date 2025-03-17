@@ -48,7 +48,7 @@ export const category = style({
 })
 
 export const label = style({
-  font: '600 1.8rem "Pretendard", sans-serif',
+  font: '500 1.6rem "Pretendard", sans-serif',
   color: adminColor.basicFontColor,
   transition: 'color .3s',
   selectors: {
