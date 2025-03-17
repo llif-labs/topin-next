@@ -73,6 +73,7 @@ export const adminButtonWrapper = style({
 
 export const adminButton = style({
   color: adminColor.basicFontColor,
-  font: '500 1.5rem "Pretendard", sans-serif',
+  width: '100%',
+  font: '500 1.3rem "Pretendard", sans-serif',
   cursor: 'pointer'
 })

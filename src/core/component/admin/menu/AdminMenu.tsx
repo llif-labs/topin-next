@@ -53,7 +53,6 @@ const AdminMenu = () => {
       </div>
 
       <div className={adminButtonWrapper}>
-        <p className={adminButton}>메인</p>
         <p className={adminButton}>로그아웃</p>
       </div>
     </nav>

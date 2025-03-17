@@ -33,4 +33,5 @@ export const AdminMenuData: MenuInterface[] = [
   {path: '/admin/complaint', label: '신고관리', child: ComplainMenu},
   {path: '/admin/notice', label: '공지관리', child: PopupMenu},
   {path: '/admin/setting', label: '환경설정', child: SettingMenu},
+  {path: '/', label: 'TOPIN'},
 ]
