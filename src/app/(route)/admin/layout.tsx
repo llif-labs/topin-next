@@ -1,14 +1,18 @@
-import {LayoutInterface} from '@/core/common/interface'
-import {adminChildren, adminLayout} from '@/app/(route)/admin/style.css'
-import AdminMenu from '@/core/component/admin/menu/AdminMenu'
+import { LayoutInterface } from '@/core/common/interface';
+import { adminChildren, adminLayout } from '@/app/(route)/admin/style.css';
+import AdminMenu from '@/core/component/admin/menu/AdminMenu';
+import Breadcrumbs from '@/core/component/admin/breadcrumbs'
 
-const Layout = ({children}: LayoutInterface) => {
-  return<div className={adminLayout}>
-    <AdminMenu />
-    <div className={adminChildren}>
-      {children}
+export default async function Layout({ children }: LayoutInterface) {
+
+  return (
+    <div className={adminLayout}>
+      <AdminMenu />
+
+      <div className={adminChildren}>
+        <Breadcrumbs />
+        {children}
+      </div>
     </div>
-  </div>
+  );
 }
-
-export default Layout

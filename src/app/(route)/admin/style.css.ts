@@ -8,6 +8,8 @@ export const adminLayout = style({
 })
 
 export const adminChildren = style({
+  display: 'flex',
+  flexDirection: 'column',
   flex: 1,
   overflowY: 'scroll',
   padding: '1rem',

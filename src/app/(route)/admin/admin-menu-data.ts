@@ -6,7 +6,7 @@ export interface MenuInterface {
 
 
 export const IssueMenu: MenuInterface[] = [
-  {path: '/', label: '등록된 이슈'},
+  {path: '/admin/issue/regi', label: '등록된 이슈'},
   {path: '/', label: '대기중 이슈'},
 ]
 
@@ -29,7 +29,7 @@ export const SettingMenu: MenuInterface[] = [
 
 export const AdminMenuData: MenuInterface[] = [
   {path: '/admin/dashboard', label: '대시보드'},
-  {path: '/admin', label: '이슈관리', child: IssueMenu},
+  {path: '/admin/issue', label: '이슈관리', child: IssueMenu},
   {path: '/admin', label: '신고관리', child: ComplainMenu},
   {path: '/admin', label: '공지관리', child: PopupMenu},
   {path: '/admin', label: '환경설정', child: SettingMenu},
