@@ -1,7 +1,7 @@
 import { LayoutInterface } from '@/core/common/interface';
 import { adminChildren, adminLayout } from '@/app/(route)/admin/style.css';
 import AdminMenu from '@/core/component/admin/menu/AdminMenu';
-import Breadcrumbs from '@/core/component/admin/breadcrumbs'
+import AdminHeader from '../../../core/component/admin/header'
 
 export default async function Layout({ children }: LayoutInterface) {
 
@@ -10,7 +10,7 @@ export default async function Layout({ children }: LayoutInterface) {
       <AdminMenu />
 
       <div className={adminChildren}>
-        <Breadcrumbs />
+        <AdminHeader />
         {children}
       </div>
     </div>

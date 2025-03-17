@@ -30,6 +30,7 @@ export const graph = {
 
 export const adminFont = {
   lg: '700 3.2rem/110% "Pretendard", sans-serif',
+  xlg: '700 2.8rem/110% "Pretendard", sans-serif',
   xmd: '700 1.8rem/110% "Pretendard", sans-serif',
   md: '500 1.8rem/110% "Pretendard", sans-serif',
   regular: '500 1.5rem/120% "Pretendard", sans-serif',

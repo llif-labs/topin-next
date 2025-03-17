@@ -12,6 +12,6 @@ export const adminChildren = style({
   flexDirection: 'column',
   flex: 1,
   overflowY: 'scroll',
-  padding: '1rem',
+  padding: '2rem 2rem',
   maxHeight: '100vh'
 })
