@@ -1,39 +1,78 @@
-import {globalStyle, style} from '@vanilla-extract/css'
+import {style} from '@vanilla-extract/css'
+import {adminBadge, adminColor} from '@/style/adminStyle.css'
 
 export const adminMenu = style({
   flex: 1,
   display: 'flex',
-  padding: '1rem',
-  maxWidth: '20rem',
-  borderRight: '.1rem solid #eee'
-})
-
-export const menuList = style({
-  width: '100%',
-  display: 'flex',
   flexDirection: 'column',
-  gap: '.8rem',
+  padding: '1rem 2rem',
+  maxWidth: '20rem',
+  background: adminColor.backgroundColor,
 })
 
-export const menuItem = style({
+export const adminHeader = style({
+  font: '700 2rem "Pretendard", sans-serif',
+  color: adminColor.basicFontColor,
+  padding: '2rem 0 4rem',
+})
+
+export const adminListWrapper = style({
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
+  gap: '3rem',
 })
 
-export const checkbox = style({ display: 'none' })
-export const menuLabel = style({
-  font: '500 1.4rem "Pretendard", sans-serif',
-  letterSpacing: '-0.02em',
-  cursor: 'pointer',
+export const adminMenuList = style({
+  position: 'relative',
+  display: 'flex',
+  width: '100%',
+  flexDirection: 'column',
+  gap: '.8rem',
+  selectors: {
+    '&:not(:last-child)::before': {
+      position: 'absolute',
+      content: '',
+      bottom: '-1.5rem',
+      left: 0,
+      width: '100%',
+      height: '.1rem',
+      background: adminColor.categoryColor,
+    },
+  },
 })
 
-export const list = style({
-  maxHeight: '0rem',
-  overflow: 'hidden',
-  transition: 'max-height .3s'
+export const category = style({
+  font: '700 1.3rem "Pretendard", sans-serif',
+  color: adminColor.categoryColor,
 })
 
-globalStyle(`${checkbox}:checked ~ ${list}`, {
-  maxHeight: '10rem'
+export const label = style({
+  font: '600 1.8rem "Pretendard", sans-serif',
+  color: adminColor.basicFontColor,
+  transition: 'color .3s',
+  selectors: {
+    [`&.active`]: {
+      color: adminColor.activeFontColor,
+    },
+    [`&:hover`]: {
+      color: adminColor.activeFontColor,
+    },
+  },
+})
+
+export const adminButtonWrapper = style({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  color: adminColor.basicFontColor,
+  gap: '.8rem',
+  padding: '0 0 2rem',
+})
+
+export const adminButton = style({
+  color: adminColor.basicFontColor,
+  font: '500 1.5rem "Pretendard", sans-serif',
+  cursor: 'pointer'
 })

@@ -12,16 +12,15 @@ globalStyle('*', {
   padding: 0,
   margin: 0,
   listStyle: 'none',
+  textDecoration: 'none'
 })
 
 globalStyle('button', {
   background: 'transparent',
   font: '500 1.4rem "Pretendard", sans-serif',
   letterSpacing: '-0.02em',
-  padding: '.5rem 2rem',
-  border: '.1rem solid #eee',
+  border: 'none',
   appearance: 'none',
-  borderRadius: '10rem'
 })
 
 globalStyle('::-webkit-scrollbar', {
