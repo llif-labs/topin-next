@@ -28,6 +28,10 @@ export const graph = {
   }
 }
 
+export const tableColor = {
+  bgColor: '#F8FAFC'
+}
+
 export const adminFont = {
   lg: '700 3.2rem/110% "Pretendard", sans-serif',
   xlg: '700 2.8rem/110% "Pretendard", sans-serif',
@@ -35,7 +39,8 @@ export const adminFont = {
   md: '500 1.8rem/110% "Pretendard", sans-serif',
   regular: '500 1.5rem/120% "Pretendard", sans-serif',
   sm: '500 1.4rem/110% "Pretendard", sans-serif',
-  xsm: '400 1.4rem "Pretendard", sans-serif'
+  xsm: '400 1.4rem "Pretendard", sans-serif',
+  xxsm: '400 1.2rem "Pretendard", sans-serif'
 }
 
 export const adminBadge = {
