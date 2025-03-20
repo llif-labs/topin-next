@@ -1,14 +1,20 @@
 export const adminColor = {
+  bk: '#333333',
+  gray: '#DDDDDD',
+
+  green: '#34C759',
+  gray_2: '#959697',
+  gray_3: '#999999',
+
+  white: '#FFFFFF',
+
   primaryColor: '',
-  warningColor: '',
+  warningColor: '#E63946',
 
   backgroundColor: '#253642',
-
-  whiteBackground: '#FFFFFF',
   activeBackground: '#F4F2F0',
 
   blackFontColor: '#000814',
-  grayFontColor: '#959697',
   basicFontColor: '#FFFFFF',
   activeFontColor: '#E63946',
 
@@ -41,6 +47,15 @@ export const adminFont = {
   sm: '500 1.4rem/110% "Pretendard", sans-serif',
   xsm: '400 1.4rem "Pretendard", sans-serif',
   xxsm: '400 1.2rem "Pretendard", sans-serif'
+}
+
+export const font = {
+  b_md: '700 1.4rem/110% "Pretendard", sans-serif',
+  b_sm: '700 1rem/110% "Pretendard", sans-serif',
+
+  n_lg: '500 1.6rem/110% "Pretendard", sans-serif',
+  n_md: '500 1.4rem/110% "Pretendard", sans-serif',
+  n_sm: '500 1.2rem/110% "Pretendard", sans-serif',
 }
 
 export const adminBadge = {

@@ -1,20 +1,10 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import {withAdmin} from '@/middleware/interceptor/withAdmin'
+import {stackHandler} from '@/middleware/stackHandler'
+import {withBasic} from '@/middleware/interceptor/withBasic'
 
-const isAdmin = () => {
-  // Placeholder; replace with real authentication logic (e.g., check cookies or token)
-  return true
-}
+const middleware = [
+  withBasic,
+  withAdmin
+]
 
-export const middleware = (request: NextRequest) => {
-
-  if (request.nextUrl.pathname.startsWith('/admin') && !isAdmin()) {
-    return NextResponse.redirect(new URL('/', request.url))
-  }
-
-  return NextResponse.next()
-}
-
-export const config = {
-  matcher: '/:path*',
-}
+export default stackHandler(middleware)

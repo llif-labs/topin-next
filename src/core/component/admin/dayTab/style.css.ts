@@ -13,8 +13,8 @@ const dayTap = {
   item: style({
     font: '400 1.2rem "Pretendard", sans-serif',
     padding: '.5rem 1rem',
-    color: adminColor.grayFontColor,
-    background: adminColor.whiteBackground,
+    color: adminColor.gray_2,
+    background: adminColor.white,
     cursor: 'pointer',
     transition: 'color .3s, background .3s',
     selectors: {

@@ -1,4 +1,4 @@
-import dashboard from '@/app/(route)/admin/dashboard/style.css'
+import dashboard from '@/app/(route)/admin/content/dashboard/style.css'
 import AnalyticsBox, {AnalyticsData} from '@/core/component/admin/analytics-box'
 import DayTab from '@/core/component/admin/dayTab'
 

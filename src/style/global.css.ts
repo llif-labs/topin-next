@@ -12,7 +12,8 @@ globalStyle('*', {
   padding: 0,
   margin: 0,
   listStyle: 'none',
-  textDecoration: 'none'
+  textDecoration: 'none',
+  outline: 'none'
 })
 
 globalStyle('button', {

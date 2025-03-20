@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   redirects: async () => [
     {
       source: '/admin',
-      destination: '/admin/dashboard',
+      destination: '/admin/content/dashboard',
       permanent: true
     },
   ]

@@ -16,7 +16,7 @@ export const table = {
       background: tableColor.bgColor,
     }),
     td: style({
-      color: adminColor.grayFontColor,
+      color: adminColor.gray_2,
       padding: '1rem 2rem',
       font: adminFont.xxsm,
     }),

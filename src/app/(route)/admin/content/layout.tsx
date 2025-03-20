@@ -1,7 +1,7 @@
-import { LayoutInterface } from '@/core/common/interface';
-import { adminChildren, adminLayout } from '@/app/(route)/admin/style.css';
+import { LayoutInterface } from '@/core/common/interface/default';
+import { adminChildren, adminLayout } from '@/app/(route)/admin/content/style.css';
 import AdminMenu from '@/core/component/admin/menu/AdminMenu';
-import AdminHeader from '../../../core/component/admin/header'
+import AdminHeader from '../../../../core/component/admin/header'
 
 export const metadata = {
   title: 'TOPIN - ADMIN',

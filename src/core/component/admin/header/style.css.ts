@@ -24,11 +24,11 @@ export const breadcrumbs = {
   }),
   span: style({
     fontSize: '1.1rem',
-    color: adminColor.grayFontColor,
+    color: adminColor.gray_2,
   }),
   a: style({
     fontSize: '1.1rem',
-    color: adminColor.grayFontColor,
+    color: adminColor.gray_2,
     opacity: .7
   }),
 }

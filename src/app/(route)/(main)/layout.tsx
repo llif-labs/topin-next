@@ -1,6 +1,6 @@
 import './style.css';
 import React, {JSX} from 'react'
-import {LayoutInterface} from '@/core/common/interface'
+import {LayoutInterface} from '@/core/common/interface/default'
 import Header from '@/core/component/header'
 import {layout, mainBody, sideInfo} from '@/app/(route)/(main)/style.css'
 

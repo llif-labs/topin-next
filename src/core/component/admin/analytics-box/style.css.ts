@@ -42,7 +42,7 @@ const box = {
     }),
     title: style({
       font: adminFont.xsm,
-      color: adminColor.grayFontColor,
+      color: adminColor.gray_2,
     }),
     value: style({
       font: adminFont.lg,
@@ -53,7 +53,7 @@ const box = {
       decrease: changeValue(adminBadge.red.font),
       text: style({
         font: adminFont.xsm,
-        color: adminColor.grayFontColor,
+        color: adminColor.gray_2,
       }),
     },
 

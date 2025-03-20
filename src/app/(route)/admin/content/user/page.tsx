@@ -10,7 +10,7 @@ const data = [
     name: '김남규',
     username: 'vpdls1511@gmail.com',
     access: 1,
-  }
+  },
 ]
 
 const Page = () => {
