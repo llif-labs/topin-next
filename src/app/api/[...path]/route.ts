@@ -1,6 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server'
 import {decryptOnMiddleware, setLoginSession} from '@/core/util/SessionUtil'
 import axios, {AxiosResponse} from 'axios'
+import ValueUtil from '@/core/util/ValueUtil'
 
 // axios.defaults.withCredentials = true
 
@@ -26,7 +27,7 @@ const filterPath = (
 }
 
 async function handleRequestBody(req: NextRequest) {
-  const contentType = req.headers.get('Content-Type') || ''
+  const contentType = req.headers.get('Content-Type') || ValueUtil.DEFAULT_STRING
 
   if (contentType.includes('multipart/form-data')) {
     // FormData를 직접 처리
@@ -40,7 +41,7 @@ async function handleRequestBody(req: NextRequest) {
 
 const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>) => {
   const pathname = req.nextUrl.pathname
-  const referrer = req.headers.get('referer') || ''
+  const referrer = req.headers.get('referer') || ValueUtil.DEFAULT_STRING
 
   // 로그인 url이 아니면 그냥 넘기고,
   if (!pathname.includes('login') && !pathname.includes('verifyEmail')) return
@@ -50,6 +51,7 @@ const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>) => 
   if (referrer.includes('/admin')) {
     // 어드민 로그인은 이메일 인증해야함.. 이메일 인증 완료되면 user 정보내려줌..
     if (pathname.includes('verifyEmail')) {
+      if(response.data.payload.role < ValueUtil.IS_ADMIN)
       await setLoginSession(true, response.data.payload)
     }
   } else {
