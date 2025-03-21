@@ -1,5 +1,5 @@
 import {style} from '@vanilla-extract/css'
-import {adminBadge, adminColor} from '@/style/adminStyle.css'
+import {adminColor} from '@/style/adminStyle.css'
 
 export const adminMenu = style({
   flex: 1,

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { page, table } from '@/core/module/table/style.css' // 스타일 CSS 모듈
 import { JSX } from 'react'
 

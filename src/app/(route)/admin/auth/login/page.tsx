@@ -35,7 +35,7 @@ const Page = () => {
 
   const onLoginSubmit = () => {
     setIsLoading(true)
-    axios.post('/api/auth/login', state).then(res => {
+    axios.post('/api/auth/login', state).then(() => {
       if (radio2Ref.current) radio2Ref.current.checked = true
     }).finally(() => {
       setIsLoading(false)

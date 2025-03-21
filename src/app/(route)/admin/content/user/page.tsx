@@ -1,36 +1,111 @@
 'use client'
 
 import Table from '@/core/module/table'
+import {useCallback, useEffect, useState} from 'react'
+import API from '@/core/module/service/api'
+import {Req} from '@/core/module/service/apiInterface'
+import Pagenation from '@/core/module/pagenation'
 
-const tableTitle = ['SNS', '이름', '계정', '상태']
+const tableTitle = ['SNS', '이름', '닉네임', '계정', '나이', '상태', '마지막 로그인', '생성일']
+type StateFilter = 'all' | 'active' | 'banned' | 'deactivated'
 
-const data = [
-  {
-    social: 'google',
-    name: '김남규',
-    username: 'vpdls1511@gmail.com',
-    access: 1,
-  },
-]
+interface FilterInterface {
+  status: StateFilter,
+
+  [key: string]: any
+}
+
+interface AuthListInterface {
+  id: number,
+  role: number,
+  username: string
+  password: string
+  email: string
+  nickname: string
+  name: string
+  bio: string
+  birth: string
+  status: string
+  last_login: string
+  created_at: string
+  updated_at: string
+  provider: string | null,
+  provider_uid: string | null
+}
+
+interface DataInterface {
+  total: number
+  size: number
+  currentPage: number,
+  list: AuthListInterface[]
+}
+
 
 const Page = () => {
+
+  const [filter, setFilter] = useState<FilterInterface>({
+    status: 'all',
+  })
+  const [data, setData] = useState<DataInterface>({
+    total: 0,
+    size: 10,
+    currentPage: 1,
+    list: [],
+  })
+
+  const handleUpdatePage = (page: number) => {
+    setData(prev => ({...prev, currentPage: page}))
+  }
+
+  const onGetListSize = useCallback(() => {
+    const listCfg: Req = {method: 'POST', url: '/api/admin/auth/list/size', params: filter}
+    API.call<{ total: number }>(listCfg).then(
+      res => setData((prev) => ({...prev, total: res.payload.total})),
+      error => console.log(error.message),
+    )
+  }, [filter]) // filter가 변경될 때만 함수 재생성
+
+  const onGetItemList = useCallback(() => {
+    const listCfg: Req = {
+      method: 'POST', url: '/api/admin/auth/list',
+      params: {...filter, currentPage: data.currentPage, size: data.size},
+    }
+    API.call<AuthListInterface[]>(listCfg).then(
+      res => setData((prev) => ({...prev, list: [...res.payload]})),
+      error => console.log(error.message),
+    )
+  }, [filter, data.currentPage, data.size]) // 의존성 추가
+
+  useEffect(() => {
+    if (data.total === 0) {
+      setFilter({status: 'all'})
+      onGetListSize()
+    } else onGetItemList()
+  }, [data.total, data.currentPage, onGetListSize, onGetItemList])
+
   return <>
     <Table
       thead={tableTitle}
-      data={data}
+      data={data.list}
       colGroup={<colgroup>
         <col width={10}/>
-        <col width={100}/>
-        <col width={200}/>
-        <col width={200}/>
-        <col width={100}/>
       </colgroup>}
       render={(data) => <>
-        <td>{data.social}</td>
+        <td>{data.provider || 'email'}</td>
         <td>{data.name}</td>
+        <td>{data.nickname}</td>
         <td>{data.username}</td>
-        <td>{data.access === 1 ? '허용' : '제한'}</td>
+        <td>{data.birth}</td>
+        <td>{data.status}</td>
+        <td>{data.last_login}</td>
+        <td>{data.created_at}</td>
       </>}
+    />
+
+    <Pagenation
+      currentPage={data.currentPage}
+      totalPages={data.total}
+      onPageChange={handleUpdatePage}
     />
   </>
 }
