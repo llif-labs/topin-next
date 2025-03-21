@@ -14,9 +14,11 @@ export const SESSION_SETTING = {
 
 // 기본 세션 생성 함수
 export const createSession = async (): Promise<SessionAuth> => {
-
+  
   const cookieStore = await cookies();
   const session = await getIronSession<SessionAuth>(cookieStore, SESSION_SETTING);
+
+  // console.log(session)
 
   if (session.isLoggedIn === undefined) {
     session.isLoggedIn = false;

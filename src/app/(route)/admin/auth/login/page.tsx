@@ -5,12 +5,14 @@ import Input from '@/core/module/input'
 import {useRef, useState} from 'react'
 import axios from 'axios'
 
+
 interface LoginState {
   username: string,
   password: string,
 }
 
 const Page = () => {
+
   const radio1Ref = useRef<HTMLInputElement>(null)  // radio-2 버튼에 대한 ref 생성
   const radio2Ref = useRef<HTMLInputElement>(null)  // radio-2 버튼에 대한 ref 생성
 
@@ -31,11 +33,26 @@ const Page = () => {
     }
   }
 
-  const onSubmit = () => {
+  const onLoginSubmit = () => {
     setIsLoading(true)
-    axios.post('/api/login', state).then(res =>{
-      console.log(res)
-      radio2Ref.current.checked = true
+    axios.post('/api/auth/login', state).then(res => {
+      if (radio2Ref.current) radio2Ref.current.checked = true
+    }).finally(() => {
+      setIsLoading(false)
+    })
+  }
+
+  const onVerifySubmit = () => {
+    setIsLoading(true)
+    axios.post('/api/auth/verifyEmail', {code: verifyCode}).then(
+      async (res) => {
+        console.log(res)
+        window.location.replace('/admin')
+      },
+      error => {
+        console.log(error)
+      }
+    ).finally(() => {
       setIsLoading(false)
     })
   }
@@ -53,7 +70,7 @@ const Page = () => {
           <p className={loginTitle.sub}>안녕하세요, 관리자 로그인 페이지 입니다.</p>
         </div>
 
-        <form action={onSubmit}>
+        <form action={onLoginSubmit}>
           <Input
             label={'username'} type={'text'} value={state.username}
             onChange={v => handleUpdateLoginInfo('username', v)}
@@ -66,7 +83,7 @@ const Page = () => {
 
           <div className={buttonWrapper}>
             <button className={submit} type={'submit'} disabled={isLoading}>
-              {isLoading ? <span className={spinner}/> : '로그인' }
+              {isLoading ? <span className={spinner}/> : '로그인'}
             </button>
           </div>
 
@@ -78,7 +95,7 @@ const Page = () => {
           <h3 className={loginTitle.title}> VERIFY </h3>
           <p className={loginTitle.sub}>가입 정보에 기입된 이메일로<br/> 인증번호를 발송하였습니다.</p>
         </div>
-        <form action={onSubmit}>
+        <form action={onVerifySubmit}>
           <Input
             label={'code'} type={'text'} value={verifyCode} minLength={0} maxLength={6}
             onChange={v => setVerifyCode(v)}
