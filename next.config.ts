@@ -31,6 +31,19 @@ const nextConfig: NextConfig = {
     })
     return config
   },
+  async headers() {
+    return [
+      {
+        source: '/assets/:path*', // SVG 파일 경로
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable', // 1년 동안 캐시
+          },
+        ],
+      },
+    ]
+  },
 }
 
 export default withVanillaExtract(nextConfig)

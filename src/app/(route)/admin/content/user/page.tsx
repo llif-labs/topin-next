@@ -8,8 +8,9 @@ import Pagenation from '@/core/module/pagenation'
 import AdminUserStyle from '@/app/(route)/admin/content/user/style.css'
 import Filter, {FilterTypeInterface} from '@/core/module/filter'
 import useToast from '@/core/common/hooks/ui/useToast'
+import DateUtil from '@/core/util/dateUtil'
 
-const tableTitle = ['PROVIDER', '이름', '닉네임', '계정', '나이', '상태', '마지막 로그인', '생성일']
+const tableTitle = ['상태', 'PROVIDER', '이름', '닉네임', '계정', '나이', '생성일']
 type StateFilter = 'all' | 'active' | 'banned' | 'deactivated'
 
 interface FilterInterface {
@@ -69,6 +70,7 @@ const filterTypeData: FilterTypeInterface[] = [
 const Page = () => {
 
   const {addToast} = useToast()
+
   const [filter, setFilter] = useState<FilterInterface>({
     status: 'all',
   })
@@ -86,7 +88,9 @@ const Page = () => {
   const onGetListSize = useCallback(() => {
     const listCfg: Req = {method: 'POST', url: '/api/admin/auth/list/size', params: filter}
     API.call<{ total: number }>(listCfg).then(
-      res => setData(prev => ({...prev, total: res.payload.total})),
+      res => setData(prev => ({...prev,
+        total: res.payload.total
+      })),
       error => addToast({type: 'warning', message: error.message}),
     )
   }, [filter])
@@ -119,45 +123,38 @@ const Page = () => {
   }, [data.total, data.currentPage, onGetItemList, onGetListSize])
 
   return <div className={AdminUserStyle.main}>
-    <button onClick={() => {
-      addToast({
-        type: 'info',
-        message: 'message',
-      })
-    }}> toast
-    </button>
-    <button onClick={() => {
-      addToast({
-        type: 'warning',
-        message: 'message',
-      })
-    }}> toast
-    </button>
     <Filter data={filterTypeData}/>
 
     <Table
+      isChecked={false}
+      note={'초록 = 활성 , 빨강 = 차단 , 회색 = 비활성'}
       thead={tableTitle}
       data={data.list}
       colGroup={<colgroup>
-        <col width={10}/>
+        <col width={65}/>
         <col width={100}/>
+        <col width={100}/>
+        <col width={150}/>
+        <col width={150}/>
         <col width={100}/>
       </colgroup>}
       render={(data) => <>
+        <td>
+          <div className={`${AdminUserStyle.user.status} ${data.status}`}/>
+        </td>
         <td>{data.provider || 'email'}</td>
         <td>{data.name}</td>
         <td>{data.nickname}</td>
         <td>{data.username}</td>
-        <td>{data.birth}</td>
-        <td>{data.status}</td>
-        <td>{data.last_login}</td>
-        <td>{data.created_at}</td>
+        <td>만 {DateUtil.birth(data.birth)}세</td>
+        <td>{DateUtil.format(data.created_at, 'YYYY-MM-DD')}</td>
       </>}
     />
 
     <Pagenation
       currentPage={data.currentPage}
-      totalPages={data.total}
+      size={data.size}
+      totalItem={data.total}
       onPageChange={handleUpdatePage}
     />
   </div>

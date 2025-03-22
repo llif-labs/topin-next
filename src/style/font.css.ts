@@ -4,39 +4,39 @@ const pretendard = 'Pretendard'
 
 globalFontFace(pretendard, [
   {
-    src: 'url("/font/Pretendard-Black.woff")',
+    src: 'url("/assets/font/Pretendard-Black.woff")',
     fontWeight: 900
   },
   {
-    src: 'url("/font/Pretendard-ExtraBold.woff")',
+    src: 'url("/assets/font/Pretendard-ExtraBold.woff")',
     fontWeight: 800
   },
   {
-    src: 'url("/font/Pretendard-Bold.woff")',
+    src: 'url("/assets/font/Pretendard-Bold.woff")',
     fontWeight: 700
   },
   {
-    src: 'url("/font/Pretendard-SemiBold.woff")',
+    src: 'url("/assets/font/Pretendard-SemiBold.woff")',
     fontWeight: 600
   },
   {
-    src: 'url("/font/Pretendard-Medium.woff")',
+    src: 'url("/assets/font/Pretendard-Medium.woff")',
     fontWeight: 500
   },
   {
-    src: 'url("/font/Pretendard-Regular.woff")',
+    src: 'url("/assets/font/Pretendard-Regular.woff")',
     fontWeight: 400
   },
   {
-    src: 'url("/font/Pretendard-Light.woff")',
+    src: 'url("/assets/font/Pretendard-Light.woff")',
     fontWeight: 300
   },
   {
-    src: 'url("/font/Pretendard-ExtraLight.woff")',
+    src: 'url("/assets/font/Pretendard-ExtraLight.woff")',
     fontWeight: 200
   },
   {
-    src: 'url("/font/Pretendard-Thin.woff")',
+    src: 'url("/assets/font/Pretendard-Thin.woff")',
     fontWeight: 100
   },
 ])

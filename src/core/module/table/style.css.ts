@@ -1,13 +1,21 @@
 import {globalStyle, style} from '@vanilla-extract/css'
-import {adminColor, font, tableColor} from '@/style/adminStyle.css'
+import {adminColor, font} from '@/style/adminStyle.css'
 
 export const page = {
   container: style({
     width: '100%',
+  }),
+  note: style({
+    font: font.n_md,
+    textAlign: 'right',
+    color: adminColor.gray_2,
+    padding: '1rem'
+  }),
+  table: style({
     border: `.1rem solid ${adminColor.borderColor}`,
     borderRadius: '1rem',
     overflow: 'hidden'
-  }),
+  })
 }
 
 export const table = {
@@ -34,6 +42,7 @@ export const table = {
 
 
 globalStyle(`${table.tbody} tr td`, {
+  position: 'relative',
   color: adminColor.bk,
   padding: '1rem 2rem',
   font: font.n_md,

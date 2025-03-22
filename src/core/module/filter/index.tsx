@@ -51,7 +51,7 @@ const SelectItem = (props: FilterTypeInterface) => {
     <ul className={search.list.body}>
       {
         props.data.map((item, key) => {
-          return <li key={key} className={search.list.item}>{item.label}</li>
+          return <li key={key} className={search.list.item} onClick={() => setLabel(item.label)}>{item.label}</li>
         })
       }
     </ul>

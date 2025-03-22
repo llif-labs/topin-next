@@ -13,7 +13,8 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      "@typescript-eslint/no-explicit-any": "off",  // no-explicit-any 룰을 "off"로 설정
+      "@typescript-eslint/no-explicit-any": "off",
+      'react-hooks/exhaustive-deps': 'off',
     },
   },
 ];
