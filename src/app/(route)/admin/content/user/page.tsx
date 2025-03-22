@@ -1,12 +1,14 @@
 'use client'
 
 import Table from '@/core/module/table'
-import {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import API from '@/core/module/service/api'
 import {Req} from '@/core/module/service/apiInterface'
 import Pagenation from '@/core/module/pagenation'
+import AdminUserStyle from '@/app/(route)/admin/content/user/style.css'
+import Filter from '@/core/module/filter'
 
-const tableTitle = ['SNS', '이름', '닉네임', '계정', '나이', '상태', '마지막 로그인', '생성일']
+const tableTitle = ['PROVIDER', '이름', '닉네임', '계정', '나이', '상태', '마지막 로그인', '생성일']
 type StateFilter = 'all' | 'active' | 'banned' | 'deactivated'
 
 interface FilterInterface {
@@ -58,37 +60,43 @@ const Page = () => {
   }
 
   const onGetListSize = useCallback(() => {
-    const listCfg: Req = {method: 'POST', url: '/api/admin/auth/list/size', params: filter}
+    const listCfg: Req = { method: 'POST', url: '/api/admin/auth/list/size', params: filter }
     API.call<{ total: number }>(listCfg).then(
-      res => setData((prev) => ({...prev, total: res.payload.total})),
+      res => setData(prev => ({ ...prev, total: res.payload.total })),
       error => console.log(error.message),
     )
-  }, [filter]) // filter가 변경될 때만 함수 재생성
+  }, [filter])
 
   const onGetItemList = useCallback(() => {
     const listCfg: Req = {
-      method: 'POST', url: '/api/admin/auth/list',
-      params: {...filter, currentPage: data.currentPage, size: data.size},
+      method: 'POST',
+      url: '/api/admin/auth/list',
+      params: { ...filter, currentPage: data.currentPage, size: data.size },
     }
     API.call<AuthListInterface[]>(listCfg).then(
-      res => setData((prev) => ({...prev, list: [...res.payload]})),
+      res => setData(prev => ({ ...prev, list: [...res.payload] })),
       error => console.log(error.message),
     )
-  }, [filter, data.currentPage, data.size]) // 의존성 추가
+  }, [filter, data.currentPage, data.size])
 
   useEffect(() => {
-    if (data.total === 0) {
-      setFilter({status: 'all'})
-      onGetListSize()
-    } else onGetItemList()
-  }, [data.total, data.currentPage, onGetListSize, onGetItemList])
+    setFilter({status: 'all'})
+  }, [])
 
-  return <>
+  useEffect(() => {
+    if (data.total === 0) onGetListSize()
+    else onGetItemList()
+  }, [data.total, data.currentPage, onGetItemList, onGetListSize])
+
+  return <div className={AdminUserStyle.main}>
+    <Filter />
     <Table
       thead={tableTitle}
       data={data.list}
       colGroup={<colgroup>
         <col width={10}/>
+        <col width={100}/>
+        <col width={100}/>
       </colgroup>}
       render={(data) => <>
         <td>{data.provider || 'email'}</td>
@@ -107,7 +115,7 @@ const Page = () => {
       totalPages={data.total}
       onPageChange={handleUpdatePage}
     />
-  </>
+  </div>
 }
 
 export default Page

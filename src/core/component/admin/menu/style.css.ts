@@ -37,14 +37,14 @@ export const adminMenuList = style({
       left: 0,
       width: '100%',
       height: '.1rem',
-      background: adminColor.categoryColor,
+      background: adminColor.gray_4,
     },
   },
 })
 
 export const category = style({
   font: '700 1.3rem "Pretendard", sans-serif',
-  color: adminColor.categoryColor,
+  color: adminColor.gray_4,
 })
 
 export const label = style({

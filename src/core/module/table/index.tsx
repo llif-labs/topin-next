@@ -1,5 +1,5 @@
-import { page, table } from '@/core/module/table/style.css' // 스타일 CSS 모듈
-import { JSX } from 'react'
+import {page, table} from '@/core/module/table/style.css' // 스타일 CSS 모듈
+import {JSX} from 'react'
 
 // 테이블 컴포넌트의 인터페이스 정의 (제네릭 T 사용)
 interface TableInterface<T> {
@@ -10,13 +10,13 @@ interface TableInterface<T> {
   render: (data: T) => JSX.Element; // 각 행을 렌더링하는 함수
 }
 
-const Table = <T,>({
-                     isChecked = true,
-                     thead = [],
-                     colGroup,
-                     data,
-                     render,
-                   }: TableInterface<T>) => {
+const Table = <T, >({
+                      isChecked = true,
+                      thead = [],
+                      colGroup,
+                      data,
+                      render,
+                    }: TableInterface<T>) => {
   return (
     <div className={page.container}>
       {/* 테이블 구조 */}
@@ -26,7 +26,7 @@ const Table = <T,>({
         <tr className={table.thead.tr}>
           {isChecked ? (
             <td className={table.thead.td}>
-              <input type="checkbox" />
+              <input type="checkbox"/>
             </td>
           ) : null}
           {thead.map((item, key) => (
@@ -47,7 +47,7 @@ const Table = <T,>({
         ) : (
           <tr>
             <td colSpan={thead.length + (isChecked ? 1 : 0)}>
-              데이터가 없습니다.
+              <p className={table.empty}>데이터가 없습니다. </p>
             </td>
           </tr>
         )}

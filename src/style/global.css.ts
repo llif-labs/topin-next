@@ -24,6 +24,11 @@ globalStyle('button', {
   appearance: 'none',
 })
 
+globalStyle('svg', {
+  width: '100%',
+  height: '100%',
+})
+
 globalStyle('::-webkit-scrollbar', {
   display: 'none'
 })
