@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from 'next/server'
 import {decryptOnMiddleware, setLoginSession} from '@/core/util/SessionUtil'
 import axios, {AxiosResponse} from 'axios'
 import ValueUtil from '@/core/util/ValueUtil'
+import {SessionAuth} from '@/core/common/interface/session'
 
 // axios.defaults.withCredentials = true
 
@@ -39,7 +40,7 @@ async function handleRequestBody(req: NextRequest) {
   return undefined // 그 외의 경우
 }
 
-const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>) => {
+const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>, nextRes: NextResponse) => {
   const pathname = req.nextUrl.pathname
   const referrer = req.headers.get('referer') || ValueUtil.DEFAULT_STRING
 
@@ -51,8 +52,10 @@ const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>) => 
   if (referrer.includes('/admin')) {
     // 어드민 로그인은 이메일 인증해야함.. 이메일 인증 완료되면 user 정보내려줌..
     if (pathname.includes('verifyEmail')) {
-      if(response.data.payload.role < ValueUtil.IS_ADMIN)
-      await setLoginSession(true, response.data.payload)
+      if (response.data.payload.role > ValueUtil.IS_ADMIN) {
+        await setLoginSession(true, response.data.payload)
+        nextRes.headers.set('Set-Cookie', 't.auth.sid=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Strict')
+      }
     }
   } else {
     await setLoginSession(true, response.data.payload)
@@ -100,8 +103,10 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
     // `Content-Type` 추가
     nextRes.headers.set('Content-Type', 'application/json')
 
-    await saveUser(req, response)
+    await saveUser(req, response, nextRes)
 
+
+    console.log(nextRes.headers.getSetCookie())
 
     return nextRes
   } catch (error: any) {

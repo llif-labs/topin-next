@@ -42,8 +42,6 @@ const Pagination: React.FC<PaginationProps> = ({currentPage, totalPages, onPageC
     onPageChange(p)
   }, [p])
 
-  console.log(pageNumbers)
-
   return (
     <div className={pageTapStyle.body}>
       <ul className={pageTapStyle.list.body}>

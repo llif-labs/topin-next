@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react'
+import {svgIcon} from '@/core/module/svgIcon/style.css'
 
 // SvgIconProps 타입 정의
 interface SvgIconProps {
+  className?: string
   size?: number;
   fill?: string;
   stroke?: string;
   src: string; // 예: '/assets/svg/icon1.svg'
 }
 
-const SvgIcon: React.FC<SvgIconProps> = ({size = 20, fill = '#000', stroke = '#000', src}) => {
+const SvgIcon: React.FC<SvgIconProps> = ({size = 20, fill = '#000', stroke = '#000', className, src}) => {
   const [svgContent, setSvgContent] = useState<string | null>(null)
 
   useEffect(() => {
@@ -32,11 +34,18 @@ const SvgIcon: React.FC<SvgIconProps> = ({size = 20, fill = '#000', stroke = '#0
   // SVG에 동적으로 속성 추가 (viewBox 유지)
   const modifiedSvg = svgContent.replace(
     /<svg([^>]*)>/,
-    `<svg$1 width="${size}" height="${size}" fill="${fill}" style="stroke: ${stroke}; transition: fill 0.3s ease, stroke 0.3s ease;">`  )
+    `<svg class=${svgIcon} $1 width="${size}" height="${size}" fill="${fill}">`
+  )
 
   return (
     <div
-      style={{display: 'inline-block', width: size, height: size}}
+      className={className}
+      style={{
+        display: 'inline-block',
+        width: size,
+        height: size,
+        stroke: stroke
+    }}
       dangerouslySetInnerHTML={{__html: modifiedSvg}}
       aria-label="SVG Icon"
     />

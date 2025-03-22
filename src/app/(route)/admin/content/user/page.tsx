@@ -6,7 +6,8 @@ import API from '@/core/module/service/api'
 import {Req} from '@/core/module/service/apiInterface'
 import Pagenation from '@/core/module/pagenation'
 import AdminUserStyle from '@/app/(route)/admin/content/user/style.css'
-import Filter from '@/core/module/filter'
+import Filter, {FilterTypeInterface} from '@/core/module/filter'
+import useToast from '@/core/common/hooks/ui/useToast'
 
 const tableTitle = ['PROVIDER', '이름', '닉네임', '계정', '나이', '상태', '마지막 로그인', '생성일']
 type StateFilter = 'all' | 'active' | 'banned' | 'deactivated'
@@ -42,9 +43,32 @@ interface DataInterface {
   list: AuthListInterface[]
 }
 
+const filterTypeData: FilterTypeInterface[] = [
+  {
+    label: '계정 유형',
+    type: 'select',
+    data: [
+      {label: '전체', value: 'all'},
+      {label: '활성', value: 'active'},
+      {label: '차단', value: 'banned'},
+      {label: '비활성', value: 'deactivated'},
+    ],
+  },
+  {
+    label: '계정 유형',
+    type: 'select',
+    data: [
+      {label: '전체', value: 'all'},
+      {label: '활성', value: 'active'},
+      {label: '차단', value: 'banned'},
+      {label: '비활성', value: 'deactivated'},
+    ],
+  },
+]
 
 const Page = () => {
 
+  const {addToast} = useToast()
   const [filter, setFilter] = useState<FilterInterface>({
     status: 'all',
   })
@@ -60,10 +84,10 @@ const Page = () => {
   }
 
   const onGetListSize = useCallback(() => {
-    const listCfg: Req = { method: 'POST', url: '/api/admin/auth/list/size', params: filter }
+    const listCfg: Req = {method: 'POST', url: '/api/admin/auth/list/size', params: filter}
     API.call<{ total: number }>(listCfg).then(
-      res => setData(prev => ({ ...prev, total: res.payload.total })),
-      error => console.log(error.message),
+      res => setData(prev => ({...prev, total: res.payload.total})),
+      error => addToast({type: 'warning', message: error.message}),
     )
   }, [filter])
 
@@ -71,11 +95,17 @@ const Page = () => {
     const listCfg: Req = {
       method: 'POST',
       url: '/api/admin/auth/list',
-      params: { ...filter, currentPage: data.currentPage, size: data.size },
+      params: {...filter, currentPage: data.currentPage, size: data.size},
     }
     API.call<AuthListInterface[]>(listCfg).then(
-      res => setData(prev => ({ ...prev, list: [...res.payload] })),
-      error => console.log(error.message),
+      res => {
+        setData(prev => ({...prev, list: [...res.payload]}))
+        addToast({
+          type: 'info',
+          message: res.message,
+        })
+      },
+      error => addToast({type: 'warning', message: error.message}),
     )
   }, [filter, data.currentPage, data.size])
 
@@ -89,7 +119,22 @@ const Page = () => {
   }, [data.total, data.currentPage, onGetItemList, onGetListSize])
 
   return <div className={AdminUserStyle.main}>
-    <Filter />
+    <button onClick={() => {
+      addToast({
+        type: 'info',
+        message: 'message',
+      })
+    }}> toast
+    </button>
+    <button onClick={() => {
+      addToast({
+        type: 'warning',
+        message: 'message',
+      })
+    }}> toast
+    </button>
+    <Filter data={filterTypeData}/>
+
     <Table
       thead={tableTitle}
       data={data.list}

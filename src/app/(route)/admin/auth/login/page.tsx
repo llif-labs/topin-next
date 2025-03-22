@@ -3,15 +3,22 @@
 import {buttonWrapper, login, loginTitle, prev, slider, spinner, submit} from '@/app/(route)/admin/auth/login/style.css'
 import Input from '@/core/module/input'
 import {useRef, useState} from 'react'
-import axios from 'axios'
+import API from '@/core/module/service/api'
+import useToast from '@/core/common/hooks/ui/useToast'
+import {useRouter} from 'next/navigation'
 
 
 interface LoginState {
   username: string,
   password: string,
+  [key: string]: string
 }
 
 const Page = () => {
+
+  const router = useRouter()
+
+  const {addToast} = useToast()
 
   const radio1Ref = useRef<HTMLInputElement>(null)  // radio-2 버튼에 대한 ref 생성
   const radio2Ref = useRef<HTMLInputElement>(null)  // radio-2 버튼에 대한 ref 생성
@@ -35,26 +42,33 @@ const Page = () => {
 
   const onLoginSubmit = () => {
     setIsLoading(true)
-    axios.post('/api/auth/login', state).then(() => {
-      if (radio2Ref.current) radio2Ref.current.checked = true
-    }).finally(() => {
-      setIsLoading(false)
-    })
+
+    API.call({method: 'POST', url: '/api/auth/login', params: state})
+      .then(
+        res => {
+          if (radio2Ref.current) radio2Ref.current.checked = true
+          addToast({type: 'info', message: res.message})
+        },
+        error => addToast({type: 'warning', message: error.response.data.message}),
+      )
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   const onVerifySubmit = () => {
     setIsLoading(true)
-    axios.post('/api/auth/verifyEmail', {code: verifyCode}).then(
-      async (res) => {
-        console.log(res)
-        window.location.replace('/admin')
-      },
-      error => {
-        console.log(error)
-      }
-    ).finally(() => {
-      setIsLoading(false)
-    })
+    API.call({method: 'POST', url: '/api/auth/verifyEmail', params: {code: verifyCode}})
+      .then(
+        async (res) => {
+          addToast({type: 'info', message: res.message})
+          router.replace('/admin')
+        },
+        error => addToast({type: 'warning', message: error.response.data.message}),
+      )
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return <div className={login}>

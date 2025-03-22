@@ -1,17 +1,20 @@
 export const adminColor = {
-  bk: '#333333',
+  bk: '#1A1A1A',
 
   green: '#34C759',
+  green_2: '#5FCC9B',
 
-  gray: '#DDDDDD',
+  gray: '#D1D1D1',
   gray_2: '#959697',
   gray_3: '#999999',
   gray_4: '#52677D',
+  gray_5: '#3D3D3D',
+  gray_6: '#c1c1c1',
 
   white: '#FFFFFF',
 
   primaryColor: '',
-  warningColor: '#E63946',
+  warningColor: '#E8677E',
 
   backgroundColor: '#253642',
   activeBackground: '#F4F2F0',
@@ -86,3 +89,17 @@ export const adminBadge = {
     font: '#E63946',
   }
 };
+
+
+export const ToastColor = {
+  info: {
+    stroke: '#9decd5',
+    background: '#e7faf5',
+    color: '#04533c',
+  },
+  warning: {
+    stroke: '#fdbecb',
+    background: '#ffeff2',
+    color: '#642532',
+  }
+}
