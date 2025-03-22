@@ -11,10 +11,27 @@ import {
 } from '@/core/component/admin/menu/style.css'
 import {AdminMenuData, MenuInterface} from '@/app/(route)/admin/admin-menu-data'
 import Link from 'next/link'
-import {usePathname} from 'next/navigation'
+import {usePathname, useRouter} from 'next/navigation'
+import API from '@/core/module/service/api'
+import useToast from '@/core/common/hooks/ui/useToast'
 
 const AdminMenu = () => {
+  const router = useRouter()
+
+  const {addToast} = useToast()
+
   const pathname = usePathname() // 현재 경로 가져오기
+
+  const onLogout = () => {
+    API.call({method: 'DELETE', url: '/api/auth/logout'})
+      .then(
+        res => {
+          addToast({type: 'info', message: res.message})
+          router.replace('/admin')
+        },
+        error => addToast({type: 'warning', message: error.response.data.message})
+      )
+  }
 
   return (
     <nav className={adminMenu}>
@@ -52,13 +69,11 @@ const AdminMenu = () => {
         })}
       </div>
 
-      <div className={adminButtonWrapper}>
+      <div className={adminButtonWrapper} onClick={onLogout}>
         <p className={adminButton}>로그아웃</p>
       </div>
     </nav>
   )
 }
-
-// <button className={adminLogoutButton}> 로그아웃</button>
 
 export default AdminMenu

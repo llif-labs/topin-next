@@ -1,8 +1,10 @@
 import {NextRequest, NextResponse} from 'next/server'
-import {decryptOnMiddleware, setLoginSession} from '@/core/util/SessionUtil'
+import {decryptOnMiddleware, SESSION_SETTING, setLoginSession} from '@/core/util/SessionUtil'
 import axios, {AxiosResponse} from 'axios'
 import ValueUtil from '@/core/util/ValueUtil'
+import {getIronSession} from 'iron-session'
 import {SessionAuth} from '@/core/common/interface/session'
+import {cookies} from 'next/headers'
 
 // axios.defaults.withCredentials = true
 
@@ -92,10 +94,8 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
     })
 
 
-    // ✅ 헤더를 올바르게 설정하는 방식 (Object.entries 사용)
     const nextRes = new NextResponse(JSON.stringify(response.data), {status: response.status})
 
-    // response.headers는 객체이므로 Object.entries로 처리
     Object.entries(response.headers).forEach(([key, value]) => {
       nextRes.headers.set(key, value as string)
     })
@@ -106,8 +106,6 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
     await saveUser(req, response, nextRes)
 
 
-    console.log(nextRes.headers.getSetCookie())
-
     return nextRes
   } catch (error: any) {
     const status = error.response?.status || 500
@@ -115,7 +113,6 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
 
     // 에러 로깅
     console.error(`[${new Date().toISOString()}] ❌ 프록시 에러 [${status}]:`, message)
-    // console.log(error)
 
     return NextResponse.json(message, {status})
   }
@@ -123,5 +120,19 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
 
 // 다른 메서드 지원
 export async function GET(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
+  return POST(req, context) // 동일한 로직 재사용
+}
+
+
+// 다른 메서드 지원
+export async function DELETE(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
+
+  if (req.nextUrl.pathname.includes('logout')) {
+    const session = await getIronSession<SessionAuth>(await cookies(), SESSION_SETTING);
+    session.destroy()
+
+    return NextResponse.json({ message: '로그아웃에 성공하였습니다.' }, { status: 200 });
+  }
+
   return POST(req, context) // 동일한 로직 재사용
 }

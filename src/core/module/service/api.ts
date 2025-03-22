@@ -55,7 +55,6 @@ class APIClass {
   async call<T = unknown>(req: Req): Promise<Res<T>> {
     try {
       const cfg = this.config(req)
-      // console.log('Config:', cfg)
       // throw new Error('test')
 
       return (await axios(cfg)).data
@@ -86,7 +85,7 @@ async function test() {
 
   try {
     const res = await API.call<{ id: number; name: string }>(req);
-    console.log(res.data);
+
   } catch (error) {
     console.error(error);
   }
