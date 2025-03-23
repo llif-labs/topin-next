@@ -6,13 +6,34 @@ const filterHeight = '3.6rem'
 export const filterStyle = {
   body: style({
     display: 'flex',
+    flexDirection: 'row',
+    gap: '.8rem ',
+  }),
+  inner: style({
+    display: 'flex',
     gap: '1.2rem',
     position: 'relative',
     height: filterHeight,
   }),
-  inner: style({
-    position: 'absolute'
-  }),
+  button: style({
+    borderRadius: '.8rem',
+    border: '.1rem solid ' + adminColor.gray,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: '.8rem',
+    alignItems: 'center',
+    font: font.n_md,
+    padding: '1rem 1rem 1rem 1.5rem',
+    color: adminColor.bk,
+    cursor: 'pointer',
+    transition: 'background .3s, color .3s, max-height .3s',
+    selectors: {
+      '&.active': {
+        color: adminColor.white,
+      },
+    },
+  })
 }
 
 export const search = {
@@ -20,6 +41,7 @@ export const search = {
     position: 'relative',
     display: 'inline-block',
     borderRadius: '.8rem',
+    minWidth: '10rem',
     border: '.1rem solid ' + adminColor.gray,
     height: filterHeight,
     overflow: 'hidden',
@@ -34,6 +56,7 @@ export const search = {
   title: style({
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     gap: '.8rem',
     alignItems: 'center',
     font: font.n_md,

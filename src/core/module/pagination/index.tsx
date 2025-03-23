@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import pageTapStyle from '@/core/module/pagenation/style.css'
+import pageTapStyle from '@/core/module/pagination/style.css'
 import SvgIcon from '@/core/module/svgIcon'
 
 interface PaginationProps {
@@ -29,7 +29,7 @@ const Pagination: React.FC<PaginationProps> = ({currentPage, size, totalItem, on
   }
 
   // 범위 내 페이지들 계산
-  const pageNumbers = Array.from({length: endPage - startPage + 10}, (_, index) => startPage + index)
+  const pageNumbers = Array.from({length: endPage - startPage + 1}, (_, index) => startPage + index)
 
   const handleClick = (page: number) => {
     setP(page)

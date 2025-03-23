@@ -29,7 +29,7 @@ const toastStyle = {
       alignItems: 'center',
       padding: '1.25rem 2rem',
       minWidth: '30rem',
-      borderRadius: '.4rem',
+      borderRadius: '.8rem',
       font: font.n_lg,
       animation: `${slidIn} 0.3s ease`,
       selectors: {

@@ -4,7 +4,7 @@ import Table from '@/core/module/table'
 import React, {useCallback, useEffect, useState} from 'react'
 import API from '@/core/module/service/api'
 import {Req} from '@/core/module/service/apiInterface'
-import Pagenation from '@/core/module/pagenation'
+import Pagination from '@/core/module/pagination'
 import AdminUserStyle from '@/app/(route)/admin/content/user/style.css'
 import Filter, {FilterTypeInterface} from '@/core/module/filter'
 import useToast from '@/core/common/hooks/ui/useToast'
@@ -46,17 +46,24 @@ interface DataInterface {
 
 const filterTypeData: FilterTypeInterface[] = [
   {
-    label: '계정 유형',
+    label: '검색 조건',
+    name: 'searchType',
     type: 'select',
     data: [
-      {label: '전체', value: 'all'},
-      {label: '활성', value: 'active'},
-      {label: '차단', value: 'banned'},
-      {label: '비활성', value: 'deactivated'},
+      {label: '이름', value: 'name'},
+      {label: '닉네임', value: 'nickname'},
+      {label: '계정', value: 'username'},
+      {label: '이메일', value: 'email'},
     ],
   },
   {
+    label: '검색',
+    name: 'search',
+    type: 'search'
+  },
+  {
     label: '계정 유형',
+    name: 'status',
     type: 'select',
     data: [
       {label: '전체', value: 'all'},
@@ -123,7 +130,10 @@ const Page = () => {
   }, [data.total, data.currentPage, onGetItemList, onGetListSize])
 
   return <div className={AdminUserStyle.main}>
-    <Filter data={filterTypeData}/>
+    <Filter
+      data={filterTypeData}
+      reset={true}
+    />
 
     <Table
       isChecked={false}
@@ -151,7 +161,7 @@ const Page = () => {
       </>}
     />
 
-    <Pagenation
+    <Pagination
       currentPage={data.currentPage}
       size={data.size}
       totalItem={data.total}
