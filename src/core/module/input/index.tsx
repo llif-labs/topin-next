@@ -1,17 +1,25 @@
 'use client'
 
 import inputText from '@/core/module/input/style.css'
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 
 type inputType = 'text' | 'number' | 'email' | 'phone' | 'password'
 
 interface InputInterface {
-  label: string
+  label?: string
+  placeHolder?: string
+  className?: string
   type: inputType,
   value?: string,
   maxLength?: number,
   minLength?: number
   onChange: (v: string) => void
+  removePadding?: boolean
+
+  $padding?: string
+  $width?: string
+  $height?: string
+  $borderRadius?: string
 }
 
 // invalidType의 타입을 명확히 지정
@@ -24,7 +32,7 @@ const invalidType: { [key in inputType]: string } = {
 }
 
 const Index = (props: InputInterface) => {
-  const { label, type, value, minLength, maxLength, onChange} = props
+  const {label, type, value, minLength, maxLength, onChange, removePadding = false} = props
 
   const [v, setV] = useState<string>('')  // v는 string 타입
   const [isInvalid, setIsInvalid] = useState<boolean>(false)  // isInvalid는 boolean 타입
@@ -49,20 +57,28 @@ const Index = (props: InputInterface) => {
   }
 
   const handleCheckBlur = () => {
-    if(v === '') setIsInvalid(false)
+    if (v === '') setIsInvalid(false)
   }
 
   useEffect(() => {
-    if (value) setV(value)
+    if (value !== null && value !== undefined) setV(value)
   }, [value])
 
+
   return (
-    <div className={`${inputText.wrapper} ${isInvalid && 'active'}`}>
+    <div style={{width: props.$width}}
+         className={`${inputText.wrapper} ${isInvalid && 'active'} ${removePadding && 'remove'} `}
+    >
       <div className={`${inputText.box.wrapper}`}>
         <input
-          className={inputText.box.input}
+          className={`${inputText.box.input} ${props.className}`}
+          style={{
+            borderRadius: props.$borderRadius,
+            padding: props.$padding,
+          }}
           type={type}  // `type`을 동적으로 설정
           value={v}
+          placeholder={props.placeHolder || ''}
           onChange={handleChangeValue}
           maxLength={maxLength}
           minLength={minLength}

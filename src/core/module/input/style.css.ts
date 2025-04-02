@@ -17,6 +17,10 @@ const inputText = {
       '&.active': {
         maxHeight: '5rem',
       },
+      '&.remove': {
+        padding: '0 !important',
+        maxHeight: 'unset'
+      },
     },
   }),
   box: {
@@ -47,7 +51,7 @@ const inputText = {
     input: style({
       color: adminColor.bk,
       borderRadius: '.4rem',
-      border: '.1rem solid #DDDDDD',
+      border: '.1rem solid #D1D1D1',
       padding: '1.3rem 1.6rem',
     }),
   },

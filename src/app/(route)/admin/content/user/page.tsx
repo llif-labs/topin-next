@@ -6,15 +6,14 @@ import API from '@/core/module/service/api'
 import {Req} from '@/core/module/service/apiInterface'
 import Pagination from '@/core/module/pagination'
 import AdminUserStyle from '@/app/(route)/admin/content/user/style.css'
-import Filter, {FilterTypeInterface} from '@/core/module/filter'
+import Filter, {FilterDataInterface, FilterTypeInterface} from '@/core/module/filter'
 import useToast from '@/core/common/hooks/ui/useToast'
 import DateUtil from '@/core/util/dateUtil'
 
 const tableTitle = ['상태', 'PROVIDER', '이름', '닉네임', '계정', '나이', '생성일']
-type StateFilter = 'all' | 'active' | 'banned' | 'deactivated'
 
 interface FilterInterface {
-  status: StateFilter,
+  data: FilterDataInterface[],
 
   [key: string]: any
 }
@@ -48,18 +47,13 @@ const filterTypeData: FilterTypeInterface[] = [
   {
     label: '검색 조건',
     name: 'searchType',
-    type: 'select',
+    type: 'search',
     data: [
       {label: '이름', value: 'name'},
       {label: '닉네임', value: 'nickname'},
       {label: '계정', value: 'username'},
       {label: '이메일', value: 'email'},
     ],
-  },
-  {
-    label: '검색',
-    name: 'search',
-    type: 'search'
   },
   {
     label: '계정 유형',
@@ -74,22 +68,28 @@ const filterTypeData: FilterTypeInterface[] = [
   },
 ]
 
+const initialData: DataInterface = {
+  total: 0,
+  size: 10,
+  currentPage: 1,
+  list: [],
+}
+
 const Page = () => {
 
   const {addToast} = useToast()
 
   const [filter, setFilter] = useState<FilterInterface>({
-    status: 'all',
+    data: []
   })
-  const [data, setData] = useState<DataInterface>({
-    total: 0,
-    size: 10,
-    currentPage: 1,
-    list: [],
-  })
+  const [data, setData] = useState<DataInterface>(initialData)
 
   const handleUpdatePage = (page: number) => {
     setData(prev => ({...prev, currentPage: page}))
+  }
+
+  const handleChangeFilter = (data: FilterDataInterface[]) => {
+    setFilter({data: data})
   }
 
   const onGetListSize = useCallback(() => {
@@ -121,18 +121,20 @@ const Page = () => {
   }, [filter, data.currentPage, data.size])
 
   useEffect(() => {
-    setFilter({status: 'all'})
-  }, [])
+    if(filter.data.length > 0) {
+      if (data.total === 0) onGetListSize()
+      else onGetItemList()
+    }
+  }, [data.total, data.currentPage, onGetItemList, onGetListSize])
 
   useEffect(() => {
-    if (data.total === 0) onGetListSize()
-    else onGetItemList()
-  }, [data.total, data.currentPage, onGetItemList, onGetListSize])
+    setData(initialData)
+  }, [filter])
 
   return <div className={AdminUserStyle.main}>
     <Filter
       data={filterTypeData}
-      reset={true}
+      onChange={handleChangeFilter}
     />
 
     <Table

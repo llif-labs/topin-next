@@ -1,6 +1,8 @@
-import {filterStyle, search} from '@/core/module/filter/style.css'
+import {filterStyle, filterSelect, filterSearch, filterHeight} from '@/core/module/filter/style.css'
 import {forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react'
 import SvgIcon from '@/core/module/svgIcon'
+import Input from '@/core/module/input'
+import useDebounce from '@/core/common/hooks/useDebounce'
 
 export interface FilterTypeInterface {
   label: string,
@@ -12,7 +14,7 @@ export interface FilterTypeInterface {
   }[]
 }
 
-interface FilterDataInterface {
+export interface FilterDataInterface {
   type: string
   label: string
   value: string | number
@@ -24,10 +26,10 @@ interface ItemPropsInterface {
 
 interface FilterInterface {
   data: FilterTypeInterface[]
-  reset: boolean
+  onChange: (data: FilterDataInterface[]) => void
 }
 
-const Index = ({data}: FilterInterface) => {
+const Index = ({data, onChange}: FilterInterface) => {
 
   const [filter, setFilter] = useState<FilterDataInterface[]>([])
 
@@ -57,12 +59,30 @@ const Index = ({data}: FilterInterface) => {
     }
   }
 
+  useEffect(() => {
+    onChange(filter)
+  }, [filter])
+
   return <div className={filterStyle.body}>
     <div className={filterStyle.inner}>
       {
         data.map((item, key) => {
           if (item.type === 'select') {
             return <SelectItem
+              key={key}
+              name={item.name}
+              ref={(el) => {
+                if (el && !resetRef.current.includes(el)) {
+                  resetRef.current.push(el)
+                }
+              }}
+              label={item.label}
+              type={item.type}
+              data={item.data}
+              onChange={handleUpdateFilter}
+            />
+          } else {
+            return <SearchItem
               key={key}
               name={item.name}
               ref={(el) => {
@@ -88,8 +108,7 @@ const Index = ({data}: FilterInterface) => {
 }
 
 const SelectItem = forwardRef<{ handleResetState: () => void }, FilterTypeInterface & ItemPropsInterface>((
-  props,
-  ref) => {
+  props, ref) => {
 
   const [data, setData] = useState<{ label: string, value: string | number }>({label: props.label, value: ''})
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -107,20 +126,20 @@ const SelectItem = forwardRef<{ handleResetState: () => void }, FilterTypeInterf
     props.onChange(props.name, data.label, data.value)
   }, [data])
 
-  return <div className={`${search.body} ${isOpen ? 'active' : ''}`}>
-    <div className={`${search.title} ${isOpen ? 'active' : ''}`} onClick={() => setIsOpen(!isOpen)}>
+  return <div className={`${filterSelect.body} ${isOpen ? 'active' : ''}`}>
+    <div className={`${filterSelect.title} ${isOpen ? 'active' : ''}`} onClick={() => setIsOpen(!isOpen)}>
       {data.label}
       <SvgIcon
         src={'/assets/svg/icon/arrow-down-icon.svg'}
         size={14}
         stroke={isOpen ? '#FFFFFF' : '#1A1A1A'}
-        className={`${search.arrow} ${isOpen ? 'active' : ''}`}
+        className={`${filterSelect.arrow} ${isOpen ? 'active' : ''}`}
       />
     </div>
-    <ul className={search.list.body}>
+    <ul className={filterSelect.list.body}>
       {
         props.data?.map((item, key) => {
-          return <li key={key} className={search.list.item}
+          return <li key={key} className={filterSelect.list.item}
                      onClick={() => {
                        setIsOpen(false)
                        setData(item)
@@ -130,13 +149,75 @@ const SelectItem = forwardRef<{ handleResetState: () => void }, FilterTypeInterf
         })
       }
     </ul>
-
-    <div>
-
-    </div>
   </div>
 })
 
+const SearchItem = forwardRef<{ handleResetState: () => void }, FilterTypeInterface & ItemPropsInterface>((
+  props, ref) => {
+
+  const [data, setData] = useState<{ label: string, value: string | number }>({label: props.label, value: ''})
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const [search, setSearch] = useState<string>('')
+  const debounceSearch = useDebounce(search, 500)
+
+  const handleResetState = () => {
+    setData(({label: props.label, value: ''}))
+    setSearch('')
+  }
+
+  useImperativeHandle(ref, () => ({
+      handleResetState,
+    }),
+  )
+
+  useEffect(() => {
+    props.onChange(props.name, data.value.toString(), debounceSearch)
+  }, [data.value, debounceSearch])
+
+  return <div className={filterSearch.body}>
+    <div className={`${filterSelect.body} ${isOpen ? 'active' : ''}`}>
+      <div className={`${filterSelect.title} ${isOpen ? 'active' : ''}`} onClick={() => setIsOpen(!isOpen)}>
+        {data.label}
+        <SvgIcon
+          src={'/assets/svg/icon/arrow-down-icon.svg'}
+          size={14}
+          stroke={isOpen ? '#FFFFFF' : '#1A1A1A'}
+          className={`${filterSelect.arrow} ${isOpen ? 'active' : ''}`}
+        />
+      </div>
+      <ul className={filterSelect.list.body}>
+        {
+          props.data?.map((item, key) => {
+            return <li key={key} className={filterSelect.list.item}
+                       onClick={() => {
+                         setIsOpen(false)
+                         setData(item)
+                       }}>
+              {item.label}
+            </li>
+          })
+        }
+      </ul>
+    </div>
+
+    <Input
+      type={'text'}
+      placeHolder={'검색어'}
+      value={search}
+      onChange={v => setSearch(v)}
+      removePadding={true}
+      $borderRadius={'.8rem'}
+      $width={'15rem'}
+      $padding={'1rem 1rem'}
+      $height={filterHeight}
+    />
+
+  </div>
+
+})
+
 SelectItem.displayName = 'SelectItem'
+SearchItem.displayName = 'SearchItem'
 
 export default Index

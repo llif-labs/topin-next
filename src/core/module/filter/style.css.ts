@@ -1,7 +1,7 @@
 import {style} from '@vanilla-extract/css'
 import {adminColor, font} from '@/style/adminStyle.css'
 
-const filterHeight = '3.6rem'
+export const filterHeight = '3.6rem'
 
 export const filterStyle = {
   body: style({
@@ -11,7 +11,7 @@ export const filterStyle = {
   }),
   inner: style({
     display: 'flex',
-    gap: '1.2rem',
+    gap: '.8rem',
     position: 'relative',
     height: filterHeight,
   }),
@@ -36,7 +36,7 @@ export const filterStyle = {
   })
 }
 
-export const search = {
+export const filterSelect = {
   body: style({
     position: 'relative',
     display: 'inline-block',
@@ -101,4 +101,12 @@ export const search = {
       }
     }),
   },
+}
+
+export const filterSearch = {
+  body: style({
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '.4rem'
+  }),
 }
