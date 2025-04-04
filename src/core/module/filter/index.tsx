@@ -126,29 +126,31 @@ const SelectItem = forwardRef<{ handleResetState: () => void }, FilterTypeInterf
     props.onChange(props.name, data.label, data.value)
   }, [data])
 
-  return <div className={`${filterSelect.body} ${isOpen ? 'active' : ''}`}>
-    <div className={`${filterSelect.title} ${isOpen ? 'active' : ''}`} onClick={() => setIsOpen(!isOpen)}>
-      {data.label}
-      <SvgIcon
-        src={'/assets/svg/icon/arrow-down-icon.svg'}
-        size={14}
-        stroke={isOpen ? '#FFFFFF' : '#1A1A1A'}
-        className={`${filterSelect.arrow} ${isOpen ? 'active' : ''}`}
-      />
+  return <div className={filterSearch.body}>
+    <div className={`${filterSelect.body} ${isOpen ? 'active' : ''}`}>
+      <div className={`${filterSelect.title} ${isOpen ? 'active' : ''}`} onClick={() => setIsOpen(!isOpen)}>
+        {data.label}
+        <SvgIcon
+          src={'/assets/svg/icon/arrow-down-icon.svg'}
+          size={14}
+          stroke={isOpen ? '#FFFFFF' : '#1A1A1A'}
+          className={`${filterSelect.arrow} ${isOpen ? 'active' : ''}`}
+        />
+      </div>
+      <ul className={filterSelect.list.body}>
+        {
+          props.data?.map((item, key) => {
+            return <li key={key} className={filterSelect.list.item}
+                       onClick={() => {
+                         setIsOpen(false)
+                         setData(item)
+                       }}>
+              {item.label}
+            </li>
+          })
+        }
+      </ul>
     </div>
-    <ul className={filterSelect.list.body}>
-      {
-        props.data?.map((item, key) => {
-          return <li key={key} className={filterSelect.list.item}
-                     onClick={() => {
-                       setIsOpen(false)
-                       setData(item)
-                     }}>
-            {item.label}
-          </li>
-        })
-      }
-    </ul>
   </div>
 })
 

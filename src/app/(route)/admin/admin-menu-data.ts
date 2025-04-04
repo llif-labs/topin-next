@@ -5,8 +5,7 @@ export interface MenuInterface {
 }
 
 export const IssueMenu: MenuInterface[] = [
-  {path: '/admin/content/issue/regi', label: '등록된 이슈'},
-  {path: '/admin/content/issue/pending', label: '대기중 이슈'},
+  {path: '/admin/content/issue', label: '이슈 관리'},
 ]
 
 export const ComplainMenu: MenuInterface[] = [

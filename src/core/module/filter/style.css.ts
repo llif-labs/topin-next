@@ -43,13 +43,13 @@ export const filterSelect = {
     borderRadius: '.8rem',
     minWidth: '10rem',
     border: '.1rem solid ' + adminColor.gray,
-    height: filterHeight,
+    maxHeight: filterHeight,
     overflow: 'hidden',
-    transition: 'background .3s, color .3s, height .3s',
+    transition: 'background .3s, color .3s, max-height .3s',
     selectors: {
       '&.active': {
         background: adminColor.gray_5,
-        height: '15rem',
+        maxHeight: '15rem',
       },
     },
   }),
@@ -80,11 +80,11 @@ export const filterSelect = {
   }),
   list: {
     body: style({
-      position: 'absolute',
+      position: 'relative',
       zIndex: 2,
       display: 'inherit',
       width: '100%',
-      height: '11.4rem',
+      maxHeight: '11.4rem',
       overflowY: 'scroll'
     }),
     item: style({

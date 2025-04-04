@@ -9,14 +9,9 @@ import AdminUserStyle from '@/app/(route)/admin/content/user/style.css'
 import Filter, {FilterDataInterface, FilterTypeInterface} from '@/core/module/filter'
 import useToast from '@/core/common/hooks/ui/useToast'
 import DateUtil from '@/core/util/dateUtil'
+import {DataInterface, FilterInterface} from '@/core/common/adminInterface/searchInterface'
 
 const tableTitle = ['상태', 'PROVIDER', '이름', '닉네임', '계정', '나이', '생성일']
-
-interface FilterInterface {
-  data: FilterDataInterface[],
-
-  [key: string]: any
-}
 
 interface AuthListInterface {
   id: number,
@@ -34,13 +29,6 @@ interface AuthListInterface {
   updated_at: string
   provider: string | null,
   provider_uid: string | null
-}
-
-interface DataInterface {
-  total: number
-  size: number
-  currentPage: number,
-  list: AuthListInterface[]
 }
 
 const filterTypeData: FilterTypeInterface[] = [
@@ -68,7 +56,7 @@ const filterTypeData: FilterTypeInterface[] = [
   },
 ]
 
-const initialData: DataInterface = {
+const initialData: DataInterface<AuthListInterface> = {
   total: 0,
   size: 10,
   currentPage: 1,
@@ -82,7 +70,7 @@ const Page = () => {
   const [filter, setFilter] = useState<FilterInterface>({
     data: []
   })
-  const [data, setData] = useState<DataInterface>(initialData)
+  const [data, setData] = useState<DataInterface<AuthListInterface>>(initialData)
 
   const handleUpdatePage = (page: number) => {
     setData(prev => ({...prev, currentPage: page}))
@@ -108,6 +96,7 @@ const Page = () => {
       url: '/api/admin/auth/list',
       params: {...filter, currentPage: data.currentPage, size: data.size},
     }
+
     API.call<AuthListInterface[]>(listCfg).then(
       res => {
         setData(prev => ({...prev, list: [...res.payload]}))

@@ -4,7 +4,7 @@ export type Method =  LowerMethod | UpperMethod;
 
 // 요청 파라미터 타입
 interface Params {
-  [key: string]: string | number | boolean | undefined | null;
+  [key: string]: string | number | object | boolean | undefined | null;
 }
 
 // 요청 설정 타입
