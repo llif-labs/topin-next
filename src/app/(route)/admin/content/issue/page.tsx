@@ -7,9 +7,10 @@ import Table from '@/core/module/table'
 import DateUtil from '@/core/util/dateUtil'
 import Pagination from '@/core/module/pagination'
 import React, {useCallback, useEffect, useState} from 'react'
-import useToast from '@/core/common/hooks/ui/useToast'
+import useToast from '@/core/common/hooks/ui/toast/useToast'
 import {Req} from '@/core/module/service/apiInterface'
 import API from '@/core/module/service/api'
+import useDialog from '@/core/common/hooks/ui/dialog/useDialog'
 
 
 const tableTitle = ['상태', '생성자', '제목', '조회수', '참여자', '생성일']
@@ -58,13 +59,26 @@ const initialData: DataInterface<IssueInterface> = {
 
 const Page = () => {
 
-
   const {addToast} = useToast()
+  const {mountDialog} = useDialog()
 
   const [filter, setFilter] = useState<FilterInterface>({
     data: [],
   })
   const [data, setData] = useState<DataInterface<IssueInterface>>(initialData)
+
+  const handleOpenDialog = (v: any) => {
+
+    const confirm = () => {
+      console.log('confirm')
+    }
+
+    const reject = () => {
+      console.log('reject')
+    }
+
+    mountDialog(3, '거절', reject, '승인', confirm)
+  }
 
   const handleUpdatePage = (page: number) => {
     setData(prev => ({...prev, currentPage: page}))
@@ -123,6 +137,7 @@ const Page = () => {
     <Table
       isChecked={false}
       thead={tableTitle}
+      onClick={handleOpenDialog}
       data={data.list}
       colGroup={<colgroup>
         <col width={10}/>

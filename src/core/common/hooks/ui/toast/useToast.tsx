@@ -1,5 +1,5 @@
 import {createRoot, Root} from 'react-dom/client'
-import toastStyle from '@/core/common/hooks/ui/toastStlye.css'
+import toastStyle from '@/core/common/hooks/ui/toast/toastStlye.css'
 import SvgIcon from '@/core/module/svgIcon'
 import {ToastColor} from '@/style/adminStyle.css'
 

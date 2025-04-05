@@ -4,7 +4,7 @@ import {buttonWrapper, login, loginTitle, prev, slider, spinner, submit} from '@
 import Input from '@/core/module/input'
 import {useRef, useState} from 'react'
 import API from '@/core/module/service/api'
-import useToast from '@/core/common/hooks/ui/useToast'
+import useToast from '@/core/common/hooks/ui/toast/useToast'
 import {useRouter} from 'next/navigation'
 
 

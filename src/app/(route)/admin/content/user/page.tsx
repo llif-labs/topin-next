@@ -7,7 +7,7 @@ import {Req} from '@/core/module/service/apiInterface'
 import Pagination from '@/core/module/pagination'
 import AdminUserStyle from '@/app/(route)/admin/content/user/style.css'
 import Filter, {FilterDataInterface, FilterTypeInterface} from '@/core/module/filter'
-import useToast from '@/core/common/hooks/ui/useToast'
+import useToast from '@/core/common/hooks/ui/toast/useToast'
 import DateUtil from '@/core/util/dateUtil'
 import {DataInterface, FilterInterface} from '@/core/common/adminInterface/searchInterface'
 

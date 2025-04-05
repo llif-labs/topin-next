@@ -13,7 +13,7 @@ import {AdminMenuData, MenuInterface} from '@/app/(route)/admin/admin-menu-data'
 import Link from 'next/link'
 import {usePathname, useRouter} from 'next/navigation'
 import API from '@/core/module/service/api'
-import useToast from '@/core/common/hooks/ui/useToast'
+import useToast from '@/core/common/hooks/ui/toast/useToast'
 
 const AdminMenu = () => {
   const router = useRouter()

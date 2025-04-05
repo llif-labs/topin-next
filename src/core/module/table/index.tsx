@@ -1,10 +1,11 @@
 import {page, table} from '@/core/module/table/style.css' // 스타일 CSS 모듈
-import {JSX} from 'react'
+import React, {JSX} from 'react'
 
 // 테이블 컴포넌트의 인터페이스 정의 (제네릭 T 사용)
 interface TableInterface<T> {
   isChecked?: boolean; // 체크박스 여부 (기본값: true)
   note?: string; // 체크박스 여부 (기본값: true)
+  onClick?: (value: any) => void
   thead: string[]; // 테이블 헤더 배열
   colGroup?: JSX.Element; // 열 너비 조정을 위한 colgroup (선택적)
   data: T[]; // 테이블 데이터 (제네릭 타입)
@@ -14,6 +15,7 @@ interface TableInterface<T> {
 const Table = <T, >({
                       isChecked = true,
                       note = '',
+                      onClick,
                       thead = [],
                       colGroup,
                       data,
@@ -43,7 +45,7 @@ const Table = <T, >({
           <tbody className={table.tbody}>
           {data.length > 0 ? (
             data.map((item, index) => (
-              <tr key={index}>
+              <tr key={index} onClick={() => onClick && onClick(item)}>
                 {isChecked ? <td className={table.thead.td}><input type="checkbox"/></td> : null}
                 {render(item)}
               </tr>
