@@ -1,10 +1,17 @@
+'use client'
+
 import {createRoot, Root} from 'react-dom/client'
 import {dialogStyle} from '@/core/common/hooks/ui/dialog/dialogStyle.css'
+import {useEffect, useRef, useState} from 'react'
 
-let dialogRoot: Root | null = null
-let dialogContainer: Element | null = null
 
 const useDialog = () => {
+
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const dialogContainerRef = useRef<HTMLElement | null>(null)
+  const dialogRootRef = useRef<Root | null>(null)
+  const dialogRef = useRef<HTMLDivElement | null>(null)
+
 
   const mountDialog = (
     buttonSize: 1 | 2 | 3 = 1,
@@ -13,14 +20,17 @@ const useDialog = () => {
     choiceText?: string,
     choiceAction?: () => void,
   ) => {
-    if (!dialogContainer) {
-      dialogContainer = document.createElement('div')
-      document.body.appendChild(dialogContainer)
-      dialogRoot = createRoot(dialogContainer)
+    if (!dialogContainerRef.current) {
+      const container = document.createElement('div')
+      document.body.appendChild(container)
+      dialogContainerRef.current = container
+      dialogRootRef.current = createRoot(container)
     }
 
     const ui = (
-      <div className={dialogStyle.bg} onClick={unmountDialog}>
+      <div ref={dialogRef}
+           className={dialogStyle.bg}
+           onClick={unmountDialog}>
         <div className={dialogStyle.body.wrapper} onClick={e => {
           e.stopPropagation()
         }}>
@@ -47,17 +57,35 @@ const useDialog = () => {
       </div>
     )
 
-    dialogRoot?.render(ui)
+
+    dialogRootRef.current?.render(ui)
+    setTimeout(() => {
+      setIsVisible(true)
+    }, 0)
   }
 
   const unmountDialog = () => {
-    if (dialogRoot && dialogContainer && dialogContainer.parentNode) {
-      dialogRoot.unmount()
-      dialogContainer.parentNode.removeChild(dialogContainer)
-      dialogRoot = null
-      dialogContainer = null
-    }
+
+    setIsVisible(false)
   }
+
+  useEffect(() => {
+    dialogRef.current?.classList.remove('open', 'close')
+
+    if (isVisible && dialogRef.current) {
+      dialogRef.current?.classList.add('open')
+    } else {
+      dialogRef.current?.classList.add('close')
+      setTimeout(() => {
+        if (dialogRootRef.current && dialogContainerRef.current && dialogContainerRef.current.parentNode) {
+          dialogRootRef.current.unmount()
+          dialogContainerRef.current.parentNode.removeChild(dialogContainerRef.current)
+          dialogRootRef.current = null
+          dialogContainerRef.current = null
+        }
+      }, 100)
+    }
+  }, [isVisible, dialogContainerRef.current, dialogContainerRef.current?.children])
 
   return {mountDialog, unmountDialog}
 }

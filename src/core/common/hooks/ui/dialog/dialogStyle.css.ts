@@ -1,5 +1,14 @@
-import {style} from '@vanilla-extract/css'
+import {keyframes, style} from '@vanilla-extract/css'
 import {adminColor} from '@/style/adminStyle.css'
+
+const visibleOpen = keyframes({
+  '0%': {
+    opacity: 0
+  },
+  '100%': {
+    opacity: 1
+  },
+})
 
 export const dialogStyle = {
   bg: style({
@@ -9,6 +18,16 @@ export const dialogStyle = {
     top: 0,
     left: 0,
     backgroundColor: 'rgba(0, 0, 0, .25)',
+    transition: 'opacity .1s',
+    opacity: 0,
+    selectors: {
+      ['&.close']: {
+        opacity: 0
+      },
+      ['&.open']: {
+        opacity: 1
+      }
+    }
   }),
   body: {
     wrapper: style({
@@ -79,3 +98,4 @@ export const dialogStyle = {
     }),
   },
 }
+
