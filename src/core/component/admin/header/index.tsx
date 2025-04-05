@@ -5,32 +5,41 @@ import Link from 'next/link'
 import {AdminMenuData, MenuInterface} from '@/app/(route)/admin/admin-menu-data'
 import {header, breadcrumbs} from '@/core/component/admin/header/style.css'
 import React from 'react'
+import StringUtil from '@/core/util/StringUtil'
 
 const AdminHeader = () => {
   const pathname = usePathname()
 
-  // 브레드크럼 항목 생성
   const getBreadcrumbItems = (): MenuInterface[] => {
     const items: MenuInterface[] = [{path: '/admin', label: '어드민'}]
 
-    for (const menu of AdminMenuData) {
-      if (pathname === menu.path) {
-        items.push({path: menu.path, label: menu.label})
-        items.push({path: menu.path, label: menu.label}) // 현재 페이지 반복 추가
-        break
-      }
-      if (pathname.startsWith(menu.path) && menu.child) {
-        items.push({path: menu.path, label: menu.label})
+    const findPath = (
+      menuList: MenuInterface[],
+      trail: MenuInterface[] = []
+    ): MenuInterface[] | null => {
+      for (const menu of menuList) {
+        const currentTrail = [...trail, {path: menu.path, label: menu.label}]
 
-        for (const subMenu of menu.child) {
-          if (pathname === subMenu.path) {
-            items.push({path: subMenu.path, label: subMenu.label})
-            break
-          }
+        if (pathname === menu.path || StringUtil.matchPath(menu.path, pathname)) {
+          if (!menu.child) return currentTrail
+
+          const found = findPath(menu.child, currentTrail)
+          if (found) return found
+
+          return currentTrail
         }
-        break
+
+        // 자식이 있으면 계속 탐색
+        if (menu.child) {
+          const found = findPath(menu.child, currentTrail)
+          if (found) return found
+        }
       }
+      return null
     }
+
+    const result = findPath(AdminMenuData)
+    if (result) items.push(...result)
 
     return items
   }

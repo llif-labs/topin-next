@@ -48,6 +48,10 @@ globalStyle(`${table.tbody} tr td`, {
   font: font.n_md,
 })
 
+globalStyle(`${table.tbody} tr`, {
+  cursor: 'pointer'
+})
+
 globalStyle(`${table.tbody} tr:not(:last-child)`, {
   borderBottom: `.1rem solid ${adminColor.borderColor}`,
 })

@@ -45,7 +45,7 @@ const AdminMenu = () => {
               {
                 menu.child ?
                   menu.child.map((sub: MenuInterface, subKey: number) => {
-                    const isActive = pathname === sub.path
+                    const isActive = pathname.startsWith(sub.path)
                     return (
                       <Link
                         key={subKey}

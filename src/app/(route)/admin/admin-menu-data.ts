@@ -4,8 +4,12 @@ export interface MenuInterface {
   child?: MenuInterface[]
 }
 
+export const IssueChild: MenuInterface[] = [
+  {path: `/admin/content/issue/detail/[id]`, label: '이슈 상세'}
+]
+
 export const IssueMenu: MenuInterface[] = [
-  {path: '/admin/content/issue', label: '이슈 관리'},
+  {path: '/admin/content/issue', label: '이슈', child: IssueChild},
 ]
 
 export const ComplainMenu: MenuInterface[] = [
