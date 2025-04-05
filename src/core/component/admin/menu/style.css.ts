@@ -5,8 +5,11 @@ export const adminMenu = style({
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'space-between',
   padding: '1rem 2rem',
   maxWidth: '20rem',
+  maxHeight: '100vh',
+  overflow: 'hidden',
   background: adminColor.backgroundColor,
 })
 
@@ -21,6 +24,9 @@ export const adminListWrapper = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '3rem',
+  maxHeight: 'calc(100vh - 8.4rem - 6rem)',
+  overflow: 'scroll',
+  padding: '2rem 0'
 })
 
 export const adminMenuList = style({
@@ -68,12 +74,12 @@ export const adminButtonWrapper = style({
   alignItems: 'flex-start',
   color: adminColor.basicFontColor,
   gap: '.8rem',
-  padding: '0 0 2rem',
+  padding: '2rem 0',
 })
 
 export const adminButton = style({
   color: adminColor.basicFontColor,
   width: '100%',
   font: '500 1.3rem "Pretendard", sans-serif',
-  cursor: 'pointer'
+  cursor: 'pointer',
 })
