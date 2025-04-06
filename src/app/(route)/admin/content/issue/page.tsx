@@ -11,9 +11,8 @@ import useToast from '@/core/common/hooks/ui/toast/useToast'
 import {Req} from '@/core/module/service/apiInterface'
 import API from '@/core/module/service/api'
 import useDialog from '@/core/common/hooks/ui/dialog/useDialog'
-import {router} from 'next/client'
 import {useRouter} from 'next/navigation'
-
+import ApprovedDialog from '@/app/(route)/admin/content/issue/ApprovedDialog'
 
 const tableTitle = ['상태', '생성자', '제목', '조회수', '참여자', '생성일']
 
@@ -62,27 +61,55 @@ const initialData: DataInterface<IssueInterface> = {
 const Page = () => {
 
   const {addToast} = useToast()
-  const {mountDialog} = useDialog()
+  const {mountDialog, unmountDialog} = useDialog()
 
   const router = useRouter()
 
-  const [filter, setFilter] = useState<FilterInterface>({
-    data: [],
-  })
+  const [filter, setFilter] = useState<FilterInterface>({data: []})
   const [data, setData] = useState<DataInterface<IssueInterface>>(initialData)
 
   const handleOpenDialog = (v: any) => {
+    let rejectReason: string = ''
 
-    const confirm = () => {
-      console.log('confirm')
-    }
-
-    const reject = () => {
-      console.log('reject')
+    const submitApproval = (status: number) => {
+      if (status === -1 && !rejectReason) {
+        addToast({type: 'warning', message: '반려 사유가 비어있습니다. 다시 확인해주세요.'})
+        return
+      }
+      API.call({
+        url: '/api/admin/issue/approved',
+        method: 'patch',
+        params: {
+          issueId: v.id,
+          rejectReason: rejectReason,
+          status: status,
+        },
+      }).then(
+        res => {
+          const temp: IssueInterface[] = [...data.list]
+          const findIndex: number = temp.findIndex(item => item.id === v.id)
+          temp[findIndex].is_approved = status
+          setData(prev => ({
+            ...prev,
+            list: temp,
+          }))
+          unmountDialog()
+          addToast({
+            type: 'info',
+            message: res.message,
+          })
+        },
+        error => console.log(error),
+      )
     }
 
     if (v.is_approved != 1) {
-      mountDialog(3, '거절', reject, '승인', confirm)
+      mountDialog(<ApprovedDialog
+        name={v.name}
+        regiReason={v.reason}
+        reject={v.reject_reason || ''}
+        onChange={v => rejectReason = v}
+      />, 3, '반려', () => submitApproval(-1), '승인', () => submitApproval(1))
     } else {
       router.push(`issue/detail/${v.id}`)
     }
@@ -156,7 +183,7 @@ const Page = () => {
         <col width={120}/>
       </colgroup>}
       render={(data) => <>
-        <td>{data.is_approved === 0 ? '대기' : '승인'}</td>
+        <td>{data.is_approved === -1 ? '반려' : data.is_approved === 0 ? '대기' : '승인'}</td>
         <td>{data.creator}</td>
         <td>{data.name}</td>
         <td>{data.views} 회</td>

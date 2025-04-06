@@ -123,6 +123,11 @@ export async function GET(req: NextRequest, context: { params: Promise<{ path: s
   return POST(req, context) // 동일한 로직 재사용
 }
 
+// 다른 메서드 지원
+export async function PATCH(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
+  return POST(req, context) // 동일한 로직 재사용
+}
+
 
 // 다른 메서드 지원
 export async function DELETE(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {

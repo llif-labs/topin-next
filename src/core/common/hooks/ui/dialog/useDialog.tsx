@@ -2,7 +2,7 @@
 
 import {createRoot, Root} from 'react-dom/client'
 import {dialogStyle} from '@/core/common/hooks/ui/dialog/dialogStyle.css'
-import {useEffect, useRef, useState} from 'react'
+import {JSX, useEffect, useRef, useState} from 'react'
 
 
 const useDialog = () => {
@@ -14,6 +14,7 @@ const useDialog = () => {
 
 
   const mountDialog = (
+    element: JSX.Element,
     buttonSize: 1 | 2 | 3 = 1,
     confirmText?: string,
     confirmAction?: () => void,
@@ -35,7 +36,7 @@ const useDialog = () => {
           e.stopPropagation()
         }}>
           <div className={dialogStyle.body.content}>
-            asdf
+            {element}
           </div>
           <div className={dialogStyle.button.body}>
             <button className={dialogStyle.button.cancel} onClick={unmountDialog}>
