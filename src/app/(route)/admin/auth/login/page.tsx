@@ -11,6 +11,7 @@ import {useRouter} from 'next/navigation'
 interface LoginState {
   username: string,
   password: string,
+
   [key: string]: string
 }
 
@@ -25,6 +26,7 @@ const Page = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [verifyCode, setVerifyCode] = useState<string>('')
+  const [verifyToken, setVerifyToken] = useState<string>('')
   const [state, setState] = useState<LoginState>({
     username: '',
     password: '',
@@ -43,11 +45,15 @@ const Page = () => {
   const onLoginSubmit = () => {
     setIsLoading(true)
 
-    API.call({method: 'POST', url: '/api/auth/login', params: state})
+    API.call<{ verifyToken: string }>({method: 'POST', url: '/api/auth/login', params: state})
       .then(
         res => {
-          if (radio2Ref.current) radio2Ref.current.checked = true
-          addToast({type: 'info', message: res.message})
+          if (res.payload.verifyToken) {
+            if (radio2Ref.current) radio2Ref.current.checked = true
+            setVerifyToken(res.payload.verifyToken)
+            addToast({type: 'info', message: res.message})
+          }
+
         },
         error => addToast({type: 'warning', message: error.response.data.message}),
       )
@@ -58,7 +64,7 @@ const Page = () => {
 
   const onVerifySubmit = () => {
     setIsLoading(true)
-    API.call({method: 'POST', url: '/api/auth/verifyEmail', params: {code: verifyCode}})
+    API.call({method: 'POST', url: '/api/auth/verifyEmail', params: {verifyToken: verifyToken, code: verifyCode}})
       .then(
         async (res) => {
           addToast({type: 'info', message: res.message})

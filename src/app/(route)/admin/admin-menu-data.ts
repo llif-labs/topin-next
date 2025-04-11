@@ -13,7 +13,6 @@ export const IssueMenu: MenuInterface[] = [
 ]
 
 export const ComplainMenu: MenuInterface[] = [
-  {path: '/admin/content/complaint/issue', label: '신고된 이슈'},
   {path: '/admin/content/complaint/post', label: '신고된 게시글'},
   {path: '/admin/content/complaint/reply', label: '신고된 댓글'},
   {path: '/admin/content/complaint/user', label: '신고된 유저'},

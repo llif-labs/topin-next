@@ -56,7 +56,6 @@ const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>, nex
     if (pathname.includes('verifyEmail')) {
       if (response.data.payload.role > ValueUtil.IS_ADMIN) {
         await setLoginSession(true, response.data.payload)
-        nextRes.headers.set('Set-Cookie', 't.auth.sid=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Strict')
       }
     }
   } else {
@@ -68,7 +67,6 @@ const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>, nex
 export async function POST(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
   const {path} = await context.params
   const resolvedPath = path || []
-
 
   const url = `${config.API_ENDPOINT}/${resolvedPath.join('/')}`
   const session = await decryptOnMiddleware()
@@ -87,7 +85,7 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
         ...Object.fromEntries(req.headers.entries()), // 나머지 모든 헤더를 추가
         'Content-Type': req.headers.get('Content-Type') || 'application/json',
         Authorization: session?.user?.token?.accessToken ? `Bearer ${session.user.token.accessToken}` : undefined,
-        'Refresh-Token': session?.user?.token?.refreshToken || undefined,
+        'refreshtoken': session?.user?.token?.refreshToken || undefined,
       },
       data: requestBody,
       timeout: config.REQUEST_TIMEOUT,
@@ -104,7 +102,6 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
     nextRes.headers.set('Content-Type', 'application/json')
 
     await saveUser(req, response, nextRes)
-
 
     return nextRes
   } catch (error: any) {
