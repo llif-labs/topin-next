@@ -13,9 +13,9 @@ export const IssueMenu: MenuInterface[] = [
 ]
 
 export const ComplainMenu: MenuInterface[] = [
-  {path: '/admin/content/complaint/post', label: '신고된 게시글'},
-  {path: '/admin/content/complaint/reply', label: '신고된 댓글'},
-  {path: '/admin/content/complaint/user', label: '신고된 유저'},
+  {path: '/admin/content/report/post', label: '신고된 게시글'},
+  {path: '/admin/content/report/reply', label: '신고된 댓글'},
+  {path: '/admin/content/report/user', label: '신고된 유저'},
 ]
 
 export const PopupMenu: MenuInterface[] = [
@@ -32,7 +32,7 @@ export const AdminMenuData: MenuInterface[] = [
   {path: '/admin/content/dashboard', label: '대시보드'},
   {path: '/admin/content/user', label: '회원관리'},
   {path: '/admin/content/issue', label: '이슈관리', child: IssueMenu},
-  {path: '/admin/content/complaint', label: '신고관리', child: ComplainMenu},
+  {path: '/admin/content/report', label: '신고관리', child: ComplainMenu},
   {path: '/admin/content/notice', label: '공지관리', child: PopupMenu},
   {path: '/admin/content/setting', label: '환경설정', child: SettingMenu},
   {path: '/', label: 'TOPIN'},
