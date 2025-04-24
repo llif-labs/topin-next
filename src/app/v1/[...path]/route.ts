@@ -53,8 +53,6 @@ const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>) => 
   // admin 이 로그인하는건지 확인하자
   if (referrer.includes('/admin')) {
     // 어드민 로그인은 이메일 인증해야함.. 이메일 인증 완료되면 user 정보내려줌..
-    console.log('=========================')
-    console.log(response.data.payload)
 
     if (pathname.includes('verifyEmail')) {
       if (response.data.payload.role > ValueUtil.IS_ADMIN) {
