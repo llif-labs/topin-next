@@ -35,10 +35,6 @@ export const setLoginSession = async (isLoggedIn: boolean, user: SessionAutUser)
   session.isLoggedIn = isLoggedIn;
   session.user = user;  // 여기에 user 정보를 설정할 수 있습니다.
 
-
-  console.log('======================')
-  console.log(session)
-  console.log('======================')
   // 세션 저장
   await session.save();
 };

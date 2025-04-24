@@ -10,7 +10,6 @@ export const withBasic: MiddlewareFactory = (next) => {
     const hasTinsid = request.cookies.has('tinsid')
     if (!hasTinsid && session.isLoggedIn !== undefined) {
       const cookieHeader = request.headers.get('cookie') || ''
-      console.log('set cookie -------------------------')
       response.headers.set('Set-Cookie', cookieHeader)
     }
 

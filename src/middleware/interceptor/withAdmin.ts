@@ -11,8 +11,6 @@ export const withAdmin: MiddlewareFactory = (next) => {
     const isLoggedIn = session.isLoggedIn
     const userRole = session.user?.role || 0
 
-    console.log(session)
-
     // /admin/content 관련 경로에 대한 접근 제어
     if (pathname.startsWith("/admin/content")) {
       if (!isLoggedIn || userRole <= ValueUtil.IS_ADMIN) {
