@@ -31,13 +31,14 @@ export const setLoginSession = async (isLoggedIn: boolean, user: SessionAutUser)
   const cookieStore = await cookies();
   const session = await getIronSession<SessionAuth>(cookieStore, SESSION_SETTING);
 
-  console.log(isLoggedIn)
-  console.log(user)
-
   // 로그인 상태와 유저 정보를 세션에 저장
   session.isLoggedIn = isLoggedIn;
   session.user = user;  // 여기에 user 정보를 설정할 수 있습니다.
 
+
+  console.log('======================')
+  console.log(session)
+  console.log('======================')
   // 세션 저장
   await session.save();
 };

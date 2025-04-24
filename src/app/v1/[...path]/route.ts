@@ -95,14 +95,14 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
 
     const nextRes = new NextResponse(JSON.stringify(response.data), {status: response.status})
 
+    await saveUser(req, response)
+
     Object.entries(response.headers).forEach(([key, value]) => {
       nextRes.headers.set(key, value as string)
     })
 
     // `Content-Type` 추가
     nextRes.headers.set('Content-Type', 'application/json')
-
-    await saveUser(req, response)
 
     return nextRes
   } catch (error: any) {
