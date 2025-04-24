@@ -7,7 +7,8 @@ export const withBasic: MiddlewareFactory = (next) => {
     const session = await createSession()
 
     const response = NextResponse.next()
-    if (session.isLoggedIn !== undefined) {
+    const hasTinsid = request.cookies.has('tinsid')
+    if (!hasTinsid && session.isLoggedIn !== undefined) {
       const cookieHeader = request.headers.get('cookie') || ''
       response.headers.set('Set-Cookie', cookieHeader)
     }
