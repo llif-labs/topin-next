@@ -7,7 +7,7 @@ const Page = () => {
 
   useEffect(() => {
     // API.call({
-    //   url: '/api/issue/1',
+    //   url: '/v1/issue/1',
     //   method: 'get',
     // }).then((res) => {
     //   console.log(res)

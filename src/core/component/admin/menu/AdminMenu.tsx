@@ -23,7 +23,7 @@ const AdminMenu = () => {
   const pathname = usePathname() // 현재 경로 가져오기
 
   const onLogout = () => {
-    API.call({method: 'DELETE', url: '/api/auth/logout'})
+    API.call({method: 'DELETE', url: '/v1/auth/logout'})
       .then(
         res => {
           addToast({type: 'info', message: res.message})

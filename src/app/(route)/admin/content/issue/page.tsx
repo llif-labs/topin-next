@@ -77,7 +77,7 @@ const Page = () => {
         return
       }
       API.call({
-        url: '/api/admin/issue/approved',
+        url: '/v1/admin/issue/approved',
         method: 'patch',
         params: {
           issueId: v.id,
@@ -126,7 +126,7 @@ const Page = () => {
   }
 
   const onGetListSize = useCallback(() => {
-    const listCfg: Req = {method: 'POST', url: '/api/admin/issue/list/size', params: filter}
+    const listCfg: Req = {method: 'POST', url: '/v1/admin/issue/list/size', params: filter}
     API.call<{ total: number }>(listCfg).then(
       res => setData(prev => ({
         ...prev,
@@ -139,7 +139,7 @@ const Page = () => {
   const onGetItemList = useCallback(() => {
     const listCfg: Req = {
       method: 'POST',
-      url: '/api/admin/issue/list',
+      url: '/v1/admin/issue/list',
       params: {...filter, currentPage: data.currentPage, size: data.size},
     }
 

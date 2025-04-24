@@ -63,7 +63,7 @@ const Page = () => {
   }
 
   const onGetListSize = useCallback(() => {
-    const listCfg: Req = {method: 'POST', url: '/api/admin/report/reply/list/size', params: filter}
+    const listCfg: Req = {method: 'POST', url: '/v1/admin/report/reply/list/size', params: filter}
     API.call<{ total: number }>(listCfg).then(
       res => setData(prev => ({...prev,
         total: res.payload.total
@@ -75,7 +75,7 @@ const Page = () => {
   const onGetItemList = useCallback(() => {
     const listCfg: Req = {
       method: 'POST',
-      url: '/api/admin/report/reply/list',
+      url: '/v1/admin/report/reply/list',
       params: {...filter, currentPage: data.currentPage, size: data.size},
     }
 

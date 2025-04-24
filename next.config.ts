@@ -4,7 +4,6 @@ import {createVanillaExtractPlugin} from '@vanilla-extract/next-plugin'
 const withVanillaExtract = createVanillaExtractPlugin()
 
 const nextConfig: NextConfig = {
-  swcMinify: true,
   async redirects() {
     return [
       {

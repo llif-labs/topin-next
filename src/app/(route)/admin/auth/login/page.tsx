@@ -45,7 +45,7 @@ const Page = () => {
   const onLoginSubmit = () => {
     setIsLoading(true)
 
-    API.call<{ verifyToken: string }>({method: 'POST', url: '/api/auth/login', params: state})
+    API.call<{ verifyToken: string }>({method: 'POST', url: '/v1/auth/login', params: state})
       .then(
         res => {
           if (res.payload.verifyToken) {
@@ -64,7 +64,7 @@ const Page = () => {
 
   const onVerifySubmit = () => {
     setIsLoading(true)
-    API.call({method: 'POST', url: '/api/auth/verifyEmail', params: {verifyToken: verifyToken, code: verifyCode}})
+    API.call({method: 'POST', url: '/v1/auth/verifyEmail', params: {verifyToken: verifyToken, code: verifyCode}})
       .then(
         async (res) => {
           addToast({type: 'info', message: res.message})
