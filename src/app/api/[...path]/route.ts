@@ -42,7 +42,7 @@ async function handleRequestBody(req: NextRequest) {
   return undefined // 그 외의 경우
 }
 
-const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>, nextRes: NextResponse) => {
+const saveUser = async (req: NextRequest, response: AxiosResponse<any, any>) => {
   const pathname = req.nextUrl.pathname
   const referrer = req.headers.get('referer') || ValueUtil.DEFAULT_STRING
 
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest, context: { params: Promise<{ path: 
     // `Content-Type` 추가
     nextRes.headers.set('Content-Type', 'application/json')
 
-    await saveUser(req, response, nextRes)
+    await saveUser(req, response)
 
     return nextRes
   } catch (error: any) {

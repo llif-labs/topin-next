@@ -1,14 +1,5 @@
-import {keyframes, style} from '@vanilla-extract/css'
+import {style} from '@vanilla-extract/css'
 import {adminColor} from '@/style/adminStyle.css'
-
-const visibleOpen = keyframes({
-  '0%': {
-    opacity: 0
-  },
-  '100%': {
-    opacity: 1
-  },
-})
 
 export const dialogStyle = {
   bg: style({
