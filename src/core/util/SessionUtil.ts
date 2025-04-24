@@ -7,7 +7,7 @@ export const SESSION_SETTING = {
   password: process.env.NEXT_SESSION_SECRET || '', // 비밀번호는 필수
   cookieOptions: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.APP_ENV === 'production',
     sameSite: 'strict' as const,
   },
 }
